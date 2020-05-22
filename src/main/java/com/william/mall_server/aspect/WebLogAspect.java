@@ -1,4 +1,4 @@
-package com.william.mall_server.weblog;
+package com.william.mall_server.aspect;
 
 import com.william.constant.RespCodeAndMsg;
 import com.william.exception.BaseException;
@@ -17,7 +17,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Objects;
 
 
 @Aspect
@@ -25,7 +24,7 @@ import java.util.Objects;
 public class WebLogAspect {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(* com.william.william_server.controller.*.*(..))")
+    @Pointcut("execution(* com.william.mall_server.controller.*.*(..))")
     public void pointLog() {
     }
 
@@ -33,15 +32,10 @@ public class WebLogAspect {
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if(Objects.isNull(attributes)){
-            return null;
-        }
         StringBuilder sb = new StringBuilder(512);
         long startTime = System.currentTimeMillis();
+
         HttpServletRequest request = attributes.getRequest();
-        if(Objects.isNull(request)){
-            return null;
-        }
         sb.append("{\"REQUEST_TIME\":\"").append(LocalDate.now()).append(' ').append(LocalTime.now()).append("\",");
         sb.append("\"URL\":\"").append(request.getRequestURL().toString()).append("\",");
         sb.append("\"PARAMS\":\"").append(request.getQueryString()).append("\",");
@@ -56,12 +50,12 @@ public class WebLogAspect {
             // 判断是业务异常还是系统异常
             if (e instanceof BaseException) {
                 BaseException baseRuntimeException = (BaseException) e;
-                result = new Result(baseRuntimeException.getReturnCode(), baseRuntimeException.getMessage());
+                result = new Result(baseRuntimeException.getCode(), baseRuntimeException.getMessage());
             } else {
                 result = new Result(RespCodeAndMsg.UNIFY_EXCEPTION.getCode(), e.getMessage());
             }
             sb.append("\"EXECUTE_TIME\":").append(executeTime).append(',');
-            sb.append("\"RESULT\":\"").append(result).append('}');
+            sb.append("\"RESULT\":").append(result).append('}');
             if (e instanceof BaseException) {
                 // 业务异常打info日志
                 logger.info(sb.toString());

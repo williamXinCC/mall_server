@@ -16,9 +16,9 @@ import java.util.concurrent.Executor;
  * @version    v1.0
  * @since      @Copyright(c) 爱睿智健康科技(北京)有限公司
  */
-@Configuration
-@ComponentScan("com.william.mall_server.service.impl")
-@EnableAsync
+//@Configuration
+//@ComponentScan("com.william.mall_server.service.serviceImpl")
+//@EnableAsync
 public class AsyncTaskConfig implements AsyncConfigurer {
 
     @Override

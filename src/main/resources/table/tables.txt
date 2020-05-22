@@ -1,0 +1,9 @@
+参数规格表 william_goods_attribute
+商品表 william_goods
+评价表 william_evaluate
+浏览记录 william_browsing_history
+客户收藏表 william_customer_collect
+图片分类  william_picture_category
+图片   william_picture
+商品分类 william_goods_category
+推荐商品 william_recommend_goods

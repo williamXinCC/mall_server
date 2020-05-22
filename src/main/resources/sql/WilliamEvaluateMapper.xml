@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.mall_server.mapper.WilliamEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.william.pojo.WilliamEvaluate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="CHAR" />
+    <result column="cust_id" property="custId" jdbcType="CHAR" />
+    <result column="cust_icon" property="custIcon" jdbcType="VARCHAR" />
+    <result column="attachment_id" property="attachmentId" jdbcType="CHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="content_type" property="contentType" jdbcType="INTEGER" />
+    <result column="starts" property="starts" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="ishow" property="ishow" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="CHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_id" property="updateId" jdbcType="CHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    william_evaluate.id as id, william_evaluate.goods_id as goods_id, william_evaluate.cust_id as cust_id, 
+    william_evaluate.cust_icon as cust_icon, william_evaluate.attachment_id as attachment_id, 
+    william_evaluate.type as type, william_evaluate.content_type as content_type, william_evaluate.starts as starts, 
+    william_evaluate.status as status, william_evaluate.ishow as ishow, william_evaluate.content as content, 
+    william_evaluate.create_time as create_time, william_evaluate.create_id as create_id, 
+    william_evaluate.create_name as create_name, william_evaluate.update_id as update_id, 
+    william_evaluate.update_name as update_name, william_evaluate.update_time as update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamEvaluateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from william_evaluate
+    where william_evaluate.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from william_evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.william.pojo.WilliamEvaluateExample" >
+    delete from william_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.william.pojo.WilliamEvaluate" >
+    insert into william_evaluate (id, goods_id, cust_id, 
+      cust_icon, attachment_id, type, 
+      content_type, starts, status, 
+      ishow, content, create_time, 
+      create_id, create_name, update_id, 
+      update_name, update_time)
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=CHAR}, #{custId,jdbcType=CHAR}, 
+      #{custIcon,jdbcType=VARCHAR}, #{attachmentId,jdbcType=CHAR}, #{type,jdbcType=INTEGER}, 
+      #{contentType,jdbcType=INTEGER}, #{starts,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{ishow,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=CHAR}, #{createName,jdbcType=VARCHAR}, #{updateId,jdbcType=CHAR}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.pojo.WilliamEvaluate" >
+    insert into william_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="custIcon != null" >
+        cust_icon,
+      </if>
+      <if test="attachmentId != null" >
+        attachment_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="contentType != null" >
+        content_type,
+      </if>
+      <if test="starts != null" >
+        starts,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="ishow != null" >
+        ishow,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=CHAR},
+      </if>
+      <if test="custIcon != null" >
+        #{custIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentId != null" >
+        #{attachmentId,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="contentType != null" >
+        #{contentType,jdbcType=INTEGER},
+      </if>
+      <if test="starts != null" >
+        #{starts,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ishow != null" >
+        #{ishow,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=CHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=CHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.william.pojo.WilliamEvaluateExample" resultType="java.lang.Integer" >
+    select count(*) from william_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update william_evaluate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=CHAR},
+      </if>
+      <if test="record.custId != null" >
+        cust_id = #{record.custId,jdbcType=CHAR},
+      </if>
+      <if test="record.custIcon != null" >
+        cust_icon = #{record.custIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachmentId != null" >
+        attachment_id = #{record.attachmentId,jdbcType=CHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentType != null" >
+        content_type = #{record.contentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.starts != null" >
+        starts = #{record.starts,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.ishow != null" >
+        ishow = #{record.ishow,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=CHAR},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=CHAR},
+      </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update william_evaluate
+    set id = #{record.id,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=CHAR},
+      cust_id = #{record.custId,jdbcType=CHAR},
+      cust_icon = #{record.custIcon,jdbcType=VARCHAR},
+      attachment_id = #{record.attachmentId,jdbcType=CHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      content_type = #{record.contentType,jdbcType=INTEGER},
+      starts = #{record.starts,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      ishow = #{record.ishow,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=CHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      update_id = #{record.updateId,jdbcType=CHAR},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.pojo.WilliamEvaluate" >
+    update william_evaluate
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=CHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=CHAR},
+      </if>
+      <if test="custIcon != null" >
+        cust_icon = #{custIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentId != null" >
+        attachment_id = #{attachmentId,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="contentType != null" >
+        content_type = #{contentType,jdbcType=INTEGER},
+      </if>
+      <if test="starts != null" >
+        starts = #{starts,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ishow != null" >
+        ishow = #{ishow,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=CHAR},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=CHAR},
+      </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamEvaluate" >
+    update william_evaluate
+    set goods_id = #{goodsId,jdbcType=CHAR},
+      cust_id = #{custId,jdbcType=CHAR},
+      cust_icon = #{custIcon,jdbcType=VARCHAR},
+      attachment_id = #{attachmentId,jdbcType=CHAR},
+      type = #{type,jdbcType=INTEGER},
+      content_type = #{contentType,jdbcType=INTEGER},
+      starts = #{starts,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      ishow = #{ishow,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=CHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=CHAR},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamEvaluateExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from william_evaluate
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageSize} offset #{startPos} 
+
+  </select>
+
+  <!-- 查询评价 列表-->
+  <select id="getEvaluateListByGoodsIdAndType" parameterType="com.william.pojo.req.EvaluateListReq" resultType="com.william.pojo.WilliamEvaluate">
+    select
+    <include refid="Base_Column_List"/>
+    from william_evaluate
+    where william_evaluate.goods_id = #{goodsId}
+    and william_evaluate.ishow = 1
+    <if test="type!=0 and type!=null">
+      and william_evaluate.type = #{type}
+    </if>
+    <if test="contentType!=0 and contentType!=null">
+      and william_evaluate.content_type = #{contentType}
+    </if>
+
+  </select>
+
+  <!-- 评价总数 -->
+  <select id="getEvaluateCountByGoodsId" resultType="java.lang.Integer">
+    SELECT count(1) from william_evaluate where william_evaluate.goods_id = #{value}
+  </select>
+
+  <!-- 评价分类 统计-->
+  <select id="getCountByType" resultType="com.william.pojo.resp.EvaluateCountResp">
+    select count(1) as total,
+    (select count(1) from william_evaluate where william_evaluate.goods_id = #{goodsId} and type = 1) as good,
+    (select count(1) from william_evaluate where william_evaluate.goods_id = #{goodsId} and type = 2) as ordinary,
+    (select count(1) from william_evaluate where william_evaluate.goods_id = #{goodsId} and type = 3) as negative,
+    (select count(1) from william_evaluate where william_evaluate.goods_id = #{goodsId} and content_type = 4) as hasImage,
+    (select count(1) from william_evaluate where william_evaluate.goods_id = #{goodsId} and content_type = 5) as addTo
+    from william_evaluate where william_evaluate.goods_id = #{goodsId}
+  </select>
+</mapper>

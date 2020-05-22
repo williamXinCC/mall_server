@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.mall_server.mapper.WilliamBrowsingHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.william.pojo.WilliamBrowsingHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="CHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    william_browsing_history.id as id, william_browsing_history.customer_id as customer_id, 
+    william_browsing_history.goods_id as goods_id, william_browsing_history.create_time as create_time, 
+    william_browsing_history.status as status, william_browsing_history.count as count
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamBrowsingHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_browsing_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from william_browsing_history
+    where william_browsing_history.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from william_browsing_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.william.pojo.WilliamBrowsingHistoryExample" >
+    delete from william_browsing_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.william.pojo.WilliamBrowsingHistory" >
+    insert into william_browsing_history (id, customer_id, goods_id, 
+      create_time, status, count
+      )
+    values (#{id,jdbcType=INTEGER}, #{customerId,jdbcType=CHAR}, #{goodsId,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.pojo.WilliamBrowsingHistory" >
+    insert into william_browsing_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=CHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.william.pojo.WilliamBrowsingHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from william_browsing_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update william_browsing_history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerId != null" >
+        customer_id = #{record.customerId,jdbcType=CHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update william_browsing_history
+    set id = #{record.id,jdbcType=INTEGER},
+      customer_id = #{record.customerId,jdbcType=CHAR},
+      goods_id = #{record.goodsId,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      count = #{record.count,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.pojo.WilliamBrowsingHistory" >
+    update william_browsing_history
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=CHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamBrowsingHistory" >
+    update william_browsing_history
+    set customer_id = #{customerId,jdbcType=CHAR},
+      goods_id = #{goodsId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamBrowsingHistoryExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from william_browsing_history
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageSize} offset #{startPos} 
+
+  </select>
+
+
+  <!-- 按日期插入 每日只有一条 -->
+  <insert id="saveAndSelect" parameterType="com.william.pojo.WilliamBrowsingHistory">
+    <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into william_browsing_history
+    (customer_id,
+    goods_id,
+    create_time,
+    status)
+    SELECT #{customerId,jdbcType=CHAR}, #{goodsId,jdbcType=CHAR},#{createTime},#{status,jdbcType=INTEGER}
+    FROM DUAL WHERE NOT EXISTS (
+    SELECT id FROM william_browsing_history
+    WHERE customer_id = #{customerId,jdbcType=CHAR}
+    and goods_id = #{goodsId,jdbcType=CHAR}
+    and status = #{status,jdbcType=INTEGER}
+    and date_format(create_time,'%Y-%m-%d') = date_format(#{createTime},'%Y-%m-%d'))
+  </insert>
+
+  <!-- 更新浏览次数 -->
+  <update id="updateCount" parameterType="com.william.pojo.WilliamBrowsingHistory" >
+    update william_browsing_history
+    set
+    count = count + 1
+    WHERE customer_id = #{customerId,jdbcType=CHAR}
+    and goods_id = #{goodsId,jdbcType=CHAR}
+    and status = #{status,jdbcType=INTEGER}
+    and date_format(create_time,'%Y-%m-%d') = date_format(#{createTime},'%Y-%m-%d')
+  </update>
+
+  <!-- 查浏览记录 按天分组 -->
+  <resultMap id="getBrowsingHisResp" type="com.william.pojo.resp.BrowsingHisResp">
+    <result column="dayTime" property="dayTime" jdbcType="TIMESTAMP" />
+    <collection property="browsingHisVoList" resultMap="ResultMap"></collection>
+  </resultMap>
+
+
+  <!-- 查询浏览记录 按天分组-->
+  <select id="getBrowsingHisByUid" resultMap="getBrowsingHisResp">
+    SELECT
+    william_browsing_history.*,
+    william_goods.*,
+    DATE_FORMAT(william_browsing_history.create_time, '%Y-%m-%d') AS dayTime
+    FROM
+    william_browsing_history
+    INNER JOIN william_goods ON william_browsing_history.goods_id = william_goods.id
+    WHERE
+    customer_id = #{value}
+  </select>
+
+  <!-- BrowsingHisVo -->
+  <resultMap id="ResultMap" type="com.william.pojo.resp.BrowsingHisVo" >
+    <id column="id" property="hisId" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <association property="williamGoods" resultMap="williamGoodsMap"></association>
+  </resultMap>
+
+  <!-- WilliamGoods -->
+  <resultMap id="williamGoodsMap" type="com.william.pojo.WilliamGoods">
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sell" property="sell" jdbcType="DECIMAL" />
+    <result column="market_sell" property="marketSell" jdbcType="DECIMAL" />
+    <result column="base_value" property="baseValue" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+    <result column="residue" property="residue" jdbcType="INTEGER" />
+    <result column="favorite" property="favorite" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="title_category_id" property="titleCategoryId" jdbcType="INTEGER" />
+    <result column="putaway" property="putaway" jdbcType="INTEGER" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="imgs" property="imgs" jdbcType="VARCHAR" />
+    <result column="detail_banner_imgs" property="detailBannerImgs" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+  <!-- 查浏览记录按天分组结束  日期 -->
+  <select id="getBrowsingHisByUidAndDayTime" resultMap="getBrowsingHisResp">
+    SELECT
+    william_browsing_history.*,
+    william_goods.*,
+    DATE_FORMAT(william_browsing_history.create_time, '%Y-%m-%d') AS dayTime
+    FROM
+    william_browsing_history
+    INNER JOIN william_goods ON william_browsing_history.goods_id = william_goods.id
+    WHERE
+    william_browsing_history.customer_id = #{uid}
+    and DATE_FORMAT(william_browsing_history.create_time, '%Y-%m-%d') = #{dayTime}
+  </select>
+
+  <!-- uid 查询足迹-->
+  <select id="getFootmarkByUid" resultType="com.william.pojo.resp.FootmarkResp">
+    select
+    william_browsing_history.id as hisId,
+    william_browsing_history.create_time as createTime,
+    william_browsing_history.count as `count`,
+    william_goods.id as goodsId,
+    william_goods.name as goodsName,
+    william_goods.imgs as goodsImg
+    from  william_browsing_history
+    INNER JOIN william_goods ON william_browsing_history.goods_id = william_goods.id
+    where william_browsing_history.customer_id = #{uid}
+    order by william_browsing_history.id desc
+
+  </select>
+</mapper>

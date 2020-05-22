@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.mall_server.mapper.WilliamPictureMapper" >
+  <resultMap id="BaseResultMap" type="com.william.pojo.WilliamPicture" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="jump_type" property="jumpType" jdbcType="CHAR" />
+    <result column="jump_target" property="jumpTarget" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="IOS" property="ios" jdbcType="INTEGER" />
+    <result column="Andriod" property="andriod" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="phone_model" property="phoneModel" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="CHAR" />
+    <result column="client" property="client" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    william_picture.id as id, william_picture.title as title, william_picture.sub_title as sub_title, 
+    william_picture.url as url, william_picture.jump_type as jump_type, william_picture.jump_target as jump_target, 
+    william_picture.category_id as category_id, william_picture.describes as describes, 
+    william_picture.seq as seq, william_picture.status as status, william_picture.IOS as IOS, 
+    william_picture.Andriod as Andriod, william_picture.version as version, william_picture.phone_model as phone_model, 
+    william_picture.tenant_id as tenant_id, william_picture.client as client
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamPictureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from william_picture
+    where william_picture.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from william_picture
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.william.pojo.WilliamPictureExample" >
+    delete from william_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.william.pojo.WilliamPicture" >
+    insert into william_picture (id, title, sub_title, 
+      url, jump_type, jump_target, 
+      category_id, describes, seq, 
+      status, IOS, Andriod, 
+      version, phone_model, tenant_id, 
+      client)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{jumpType,jdbcType=CHAR}, #{jumpTarget,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=INTEGER}, #{describes,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{ios,jdbcType=INTEGER}, #{andriod,jdbcType=INTEGER}, 
+      #{version,jdbcType=INTEGER}, #{phoneModel,jdbcType=INTEGER}, #{tenantId,jdbcType=CHAR}, 
+      #{client,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.pojo.WilliamPicture" >
+    insert into william_picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="jumpType != null" >
+        jump_type,
+      </if>
+      <if test="jumpTarget != null" >
+        jump_target,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="describes != null" >
+        describes,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="ios != null" >
+        IOS,
+      </if>
+      <if test="andriod != null" >
+        Andriod,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="phoneModel != null" >
+        phone_model,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="client != null" >
+        client,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="jumpType != null" >
+        #{jumpType,jdbcType=CHAR},
+      </if>
+      <if test="jumpTarget != null" >
+        #{jumpTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="describes != null" >
+        #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ios != null" >
+        #{ios,jdbcType=INTEGER},
+      </if>
+      <if test="andriod != null" >
+        #{andriod,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="phoneModel != null" >
+        #{phoneModel,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=CHAR},
+      </if>
+      <if test="client != null" >
+        #{client,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.william.pojo.WilliamPictureExample" resultType="java.lang.Integer" >
+    select count(*) from william_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update william_picture
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subTitle != null" >
+        sub_title = #{record.subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jumpType != null" >
+        jump_type = #{record.jumpType,jdbcType=CHAR},
+      </if>
+      <if test="record.jumpTarget != null" >
+        jump_target = #{record.jumpTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.describes != null" >
+        describes = #{record.describes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.ios != null" >
+        IOS = #{record.ios,jdbcType=INTEGER},
+      </if>
+      <if test="record.andriod != null" >
+        Andriod = #{record.andriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.phoneModel != null" >
+        phone_model = #{record.phoneModel,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenantId != null" >
+        tenant_id = #{record.tenantId,jdbcType=CHAR},
+      </if>
+      <if test="record.client != null" >
+        client = #{record.client,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update william_picture
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      sub_title = #{record.subTitle,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      jump_type = #{record.jumpType,jdbcType=CHAR},
+      jump_target = #{record.jumpTarget,jdbcType=VARCHAR},
+      category_id = #{record.categoryId,jdbcType=INTEGER},
+      describes = #{record.describes,jdbcType=VARCHAR},
+      seq = #{record.seq,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      IOS = #{record.ios,jdbcType=INTEGER},
+      Andriod = #{record.andriod,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER},
+      phone_model = #{record.phoneModel,jdbcType=INTEGER},
+      tenant_id = #{record.tenantId,jdbcType=CHAR},
+      client = #{record.client,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.pojo.WilliamPicture" >
+    update william_picture
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="jumpType != null" >
+        jump_type = #{jumpType,jdbcType=CHAR},
+      </if>
+      <if test="jumpTarget != null" >
+        jump_target = #{jumpTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="describes != null" >
+        describes = #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ios != null" >
+        IOS = #{ios,jdbcType=INTEGER},
+      </if>
+      <if test="andriod != null" >
+        Andriod = #{andriod,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="phoneModel != null" >
+        phone_model = #{phoneModel,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=CHAR},
+      </if>
+      <if test="client != null" >
+        client = #{client,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamPicture" >
+    update william_picture
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      jump_type = #{jumpType,jdbcType=CHAR},
+      jump_target = #{jumpTarget,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      describes = #{describes,jdbcType=VARCHAR},
+      seq = #{seq,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      IOS = #{ios,jdbcType=INTEGER},
+      Andriod = #{andriod,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      phone_model = #{phoneModel,jdbcType=INTEGER},
+      tenant_id = #{tenantId,jdbcType=CHAR},
+      client = #{client,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamPictureExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from william_picture
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageSize} offset #{startPos} 
+
+  </select>
+
+
+
+    <select id="getHomePageAdv" resultType="com.william.pojo.WilliamPicture">
+       select
+       <include refid="Base_Column_List"/>
+       from william_picture where category_id in (4,5,6,7) and status = 1 and tenant_id = #{tenantId} and client = #{client}
+    </select>
+</mapper>

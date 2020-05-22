@@ -42,7 +42,7 @@ public class DataSourceConfig {
     /**
      * 配置文件里的属性名是不需要写成spring.datasource.xxx的形式的，写成a.b.c.url也没有问题，只要在配置bean时指定前缀为a.b.c
      */
-    @ConfigurationProperties(prefix = "spring.datasource.dev")
+    @ConfigurationProperties(prefix = "spring.datasource")
     @Primary
     public DataSource testDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
