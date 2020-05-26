@@ -27,4 +27,8 @@ public interface WilliamGoodsService {
     List<WilliamGoods> getRecommendGoodsByPage(PageReq pageReq, String uid);
 
     List<WilliamGoods> getHotGoodsByPage(PageReq pageReq, String uid);
+
+    List<WilliamGoods> getCollectGooodsByUid(PageReq pageReq, String uid);
+
+    List<WilliamGoods> getGuessYouLike(PageConditionReq pageConditionReq, String uid);
 }

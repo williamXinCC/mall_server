@@ -33,6 +33,27 @@ public class WilliamGoodsServiceImpl implements WilliamGoodsService {
     @Autowired
     private WilliamGoodsAttributeMapper williamGoodsAttributeMapper;
 
+    /**
+     * 猜你喜欢  ---- 待完善
+     * @author     xinchuang
+     * @param pageConditionReq :
+     * @param uid :
+     * @return : java.util.List<com.william.pojo.WilliamGoods>
+     */
+    @Override
+    public List<WilliamGoods> getGuessYouLike(PageConditionReq pageConditionReq, String uid) {
+        Integer startPage = pageConditionReq.getStartPage() == null ? 1 : Integer.parseInt(pageConditionReq.getStartPage());
+        Integer pageSize = pageConditionReq.getPageSize() == null ? 10 : Integer.parseInt(pageConditionReq.getPageSize());
+        // 从足迹中搜索,去重后,获取同类商品
+        return null;
+    }
+
+    /**
+     * 商品属性
+     * @author     xinchuang
+     * @param goodsId :
+     * @return : java.util.List<com.william.pojo.WilliamGoodsAttribute>
+     */
     @Override
     public List<WilliamGoodsAttribute> getGoodsAttributes(String goodsId) {
         WilliamGoodsAttributeExample williamGoodsAttributeExample = new WilliamGoodsAttributeExample();
@@ -120,6 +141,32 @@ public class WilliamGoodsServiceImpl implements WilliamGoodsService {
         return williamGoodsMapper.selectByExample(williamGoodsExample);
     }
 
+
+    /**
+     * 客户收藏商品
+     * @author     xinchuang
+     * @param pageReq :
+     * @param uid :
+     * @return : java.util.List<com.william.pojo.WilliamGoods>
+     */
+    @Override
+    public List<WilliamGoods> getCollectGooodsByUid(PageReq pageReq, String uid) {
+        String tenantId = pageReq.getTenantId();
+        String client = pageReq.getClient();
+        Integer startPage = pageReq.getStartPage() == null ? 1 : Integer.parseInt(pageReq.getStartPage());
+        Integer pageSize = pageReq.getPageSize() == null ? 10 : Integer.parseInt(pageReq.getPageSize());
+        PageHelper.startPage(startPage,pageSize,false);
+        List<WilliamGoods> collectGoods = williamGoodsMapper.getCollectGooodsByUid(tenantId,client,uid);
+        return collectGoods;
+    }
+
+    /**
+     * 商品详情
+     * @author     xinchuang
+     * @param publicReq :
+     * @param uid :
+     * @return : com.william.pojo.WilliamGoods
+     */
     @Override
     public WilliamGoods getGoodsInfo(PublicReq publicReq, String uid) {
         return williamGoodsMapper.selectByPrimaryKey(publicReq.getKeyName());

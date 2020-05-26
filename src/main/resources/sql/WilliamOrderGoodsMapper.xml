@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.mall_server.mapper.WilliamOrderGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.william.pojo.WilliamOrderGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="order_id" property="orderId" jdbcType="CHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="CHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="tenant_id" property="tenantId" jdbcType="CHAR" />
+    <result column="client_id" property="clientId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    william_order_goods.id as id, william_order_goods.user_id as user_id, william_order_goods.order_id as order_id, 
+    william_order_goods.goods_id as goods_id, william_order_goods.goods_name as goods_name, 
+    william_order_goods.goods_image as goods_image, william_order_goods.unit_price as unit_price, 
+    william_order_goods.quantity as quantity, william_order_goods.total_price as total_price, 
+    william_order_goods.create_time as create_time, william_order_goods.update_time as update_time, 
+    william_order_goods.tenant_id as tenant_id, william_order_goods.client_id as client_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamOrderGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_order_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from william_order_goods
+    where william_order_goods.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from william_order_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.william.pojo.WilliamOrderGoodsExample" >
+    delete from william_order_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.william.pojo.WilliamOrderGoods" >
+    insert into william_order_goods (id, user_id, order_id, 
+      goods_id, goods_name, goods_image, 
+      unit_price, quantity, total_price, 
+      create_time, update_time, tenant_id, 
+      client_id)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, 
+      #{goodsId,jdbcType=CHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsImage,jdbcType=VARCHAR}, 
+      #{unitPrice,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=CHAR}, 
+      #{clientId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.pojo.WilliamOrderGoods" >
+    insert into william_order_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsImage != null" >
+        goods_image,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=CHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null" >
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=CHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.william.pojo.WilliamOrderGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from william_order_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update william_order_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=CHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=CHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=CHAR},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsImage != null" >
+        goods_image = #{record.goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitPrice != null" >
+        unit_price = #{record.unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.quantity != null" >
+        quantity = #{record.quantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tenantId != null" >
+        tenant_id = #{record.tenantId,jdbcType=CHAR},
+      </if>
+      <if test="record.clientId != null" >
+        client_id = #{record.clientId,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update william_order_goods
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=CHAR},
+      order_id = #{record.orderId,jdbcType=CHAR},
+      goods_id = #{record.goodsId,jdbcType=CHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_image = #{record.goodsImage,jdbcType=VARCHAR},
+      unit_price = #{record.unitPrice,jdbcType=DECIMAL},
+      quantity = #{record.quantity,jdbcType=INTEGER},
+      total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      tenant_id = #{record.tenantId,jdbcType=CHAR},
+      client_id = #{record.clientId,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.pojo.WilliamOrderGoods" >
+    update william_order_goods
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=CHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null" >
+        goods_image = #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=CHAR},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamOrderGoods" >
+    update william_order_goods
+    set user_id = #{userId,jdbcType=CHAR},
+      order_id = #{orderId,jdbcType=CHAR},
+      goods_id = #{goodsId,jdbcType=CHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_image = #{goodsImage,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      quantity = #{quantity,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      tenant_id = #{tenantId,jdbcType=CHAR},
+      client_id = #{clientId,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamOrderGoodsExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from william_order_goods
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageSize} offset #{startPos} 
+
+  </select>
+</mapper>

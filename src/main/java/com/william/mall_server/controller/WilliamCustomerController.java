@@ -23,7 +23,6 @@ public class WilliamCustomerController {
     @Autowired
     private WilliamCustomerService williamCustomerService;
 
-
     /**
      * 客户详情
      * @author     xinchuang

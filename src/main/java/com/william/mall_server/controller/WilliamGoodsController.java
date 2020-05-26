@@ -24,6 +24,32 @@ public class WilliamGoodsController {
     @Autowired
     private WilliamGoodsService williamGoodsService;
 
+
+    /**
+     * 猜你喜欢
+     * @author     xinchuang
+     * @param pageConditionReq :
+     * @param uid :
+     * @return : java.util.List<com.william.pojo.WilliamGoods>
+     */
+    @PostMapping(value = "/goods/getGuessYouLike")
+    public List<WilliamGoods> getGuessYouLike(@RequestBody PageConditionReq pageConditionReq,@RequestParam(value = "uid",required = false) String uid){
+        return williamGoodsService.getGuessYouLike(pageConditionReq,uid);
+    }
+
+
+    /**
+     * 收藏商品
+     * @author     xinchuang
+     * @param pageReq :
+     * @param uid :
+     * @return : java.util.List<com.william.pojo.WilliamGoods>
+     */
+    @PostMapping(value = "/getCollectGooodsByUid")
+    public List<WilliamGoods> getCollectGooodsByUid(@RequestBody PageReq pageReq,@RequestParam("uid")String uid){
+        return williamGoodsService.getCollectGooodsByUid(pageReq,uid);
+    }
+
     /**
      * 热门商品
      * @author     xinchuang

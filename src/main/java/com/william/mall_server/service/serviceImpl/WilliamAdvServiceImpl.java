@@ -1,10 +1,13 @@
 package com.william.mall_server.service.serviceImpl;
 
+import com.william.constant.Constant;
 import com.william.mall_server.mapper.WilliamPictureMapper;
 import com.william.mall_server.service.WilliamAdvService;
 import com.william.pojo.Result;
 import com.william.pojo.WilliamPicture;
+import com.william.pojo.WilliamPictureExample;
 import com.william.pojo.req.BaseRequest;
+import com.william.pojo.req.PublicReq;
 import com.william.pojo.resp.HomePageAdvResp;
 import com.william.pojo.resp.HomePageResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,14 @@ public class WilliamAdvServiceImpl implements WilliamAdvService {
     @Autowired
     private WilliamPictureMapper williamPictureMapper;
 
+    /**
+     * 首页广告图
+     * @author     xinchuang
+     * @param tenantId :
+     * @param client :
+     * @param uid :
+     * @return : com.william.pojo.resp.HomePageAdvResp
+     */
     @Override
     public HomePageAdvResp getHomePageAdv(String tenantId,String client, String uid) {
         List<WilliamPicture> pictureList = williamPictureMapper.getHomePageAdv(tenantId,client);
@@ -47,5 +58,25 @@ public class WilliamAdvServiceImpl implements WilliamAdvService {
             }
         });
         return homePageAdvResp;
+    }
+
+
+    /**
+     * 分类获取广告图
+     * @author     xinchuang
+     * @param publicReq :
+     * @param uid :
+     * @return : java.util.List<com.william.pojo.WilliamPicture>
+     */
+    @Override
+    public List<WilliamPicture> getAdvListByCategory(PublicReq publicReq, String uid) {
+        WilliamPictureExample williamPictureExample = new WilliamPictureExample();
+        WilliamPictureExample.Criteria criteria = williamPictureExample.createCriteria();
+        criteria.andTenantIdEqualTo(publicReq.getTenantId());
+        criteria.andClientEqualTo(publicReq.getClient());
+        criteria.andStatusEqualTo(Constant.STATUS_ONE_USE);
+        criteria.andCategoryIdEqualTo(Integer.parseInt(publicReq.getKeyName()));
+        williamPictureExample.setOrderByClause("id desc");
+        return williamPictureMapper.selectByExample(williamPictureExample);
     }
 }

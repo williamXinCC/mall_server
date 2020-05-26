@@ -1,6 +1,9 @@
 package com.william.mall_server.service;
 
+import com.william.pojo.WilliamGoodsCategory;
 import com.william.pojo.req.BaseRequest;
+import com.william.pojo.req.PageConditionReq;
+import com.william.pojo.req.PublicReq;
 import com.william.pojo.resp.CategoryTreeNodesResp;
 
 import java.util.List;
@@ -14,4 +17,6 @@ import java.util.List;
 public interface WilliamGoodsCategoryService {
 
     List<CategoryTreeNodesResp> getGoodsCategoryTreeList(BaseRequest baseRequest, String uid);
+
+    List<WilliamGoodsCategory> getRecommendCategoryByPage(PageConditionReq pageConditionReq);
 }

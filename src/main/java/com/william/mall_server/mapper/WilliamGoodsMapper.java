@@ -37,4 +37,7 @@ public interface WilliamGoodsMapper {
 
     // 推荐商品
     List<WilliamGoods> getRecommendGoodsByPage(@Param("tenantId") String tenantId,@Param("client") String client);
+
+    // 收藏商品
+    List<WilliamGoods> getCollectGooodsByUid(@Param("tenantId") String tenantId,@Param("client") String client,@Param("uid") String uid);
 }

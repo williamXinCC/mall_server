@@ -3,14 +3,8 @@ package com.william.mall_server.service.serviceImpl;
 import com.william.constant.Consts;
 import com.william.enums.PictureEnums;
 import com.william.mall_server.mapper.WilliamPictureMapper;
-import com.william.mall_server.service.WilliamAdvService;
-import com.william.mall_server.service.WilliamGoodsService;
-import com.william.mall_server.service.WilliamHomeService;
-import com.william.mall_server.service.WilliamNoticService;
-import com.william.pojo.WilliamGoods;
-import com.william.pojo.WilliamPicture;
-import com.william.pojo.WilliamPictureExample;
-import com.william.pojo.WilliamSysNotice;
+import com.william.mall_server.service.*;
+import com.william.pojo.*;
 import com.william.pojo.req.BaseRequest;
 import com.william.pojo.req.PageConditionReq;
 import com.william.pojo.req.PageReq;
@@ -42,6 +36,9 @@ public class WilliamHomeServiceImpl implements WilliamHomeService {
     @Autowired
     private WilliamAdvService williamAdvService;
 
+    @Autowired
+    private WilliamGoodsCategoryService williamGoodsCategoryService;
+
     @Override
     public HomePageResp getHomePage(BaseRequest baseRequest) {
         // 租户  端
@@ -64,21 +61,34 @@ public class WilliamHomeServiceImpl implements WilliamHomeService {
         pageConditionReq.setTenantId(baseRequest.getTenantId());
         pageConditionReq.setClient(baseRequest.getClient());
         List<WilliamSysNotice> noticeList = williamNoticService.getNoticeListByType(pageConditionReq);
+        PageReq pageReq = new PageReq();
+        pageReq.setTenantId(tenantId);
+        pageReq.setClient(client);
         // 热门商品
-        List<WilliamGoods> hotGoodsByPage = williamGoodsService.getHotGoodsByPage(new PageReq(), null);
+        List<WilliamGoods> hotGoodsByPage = williamGoodsService.getHotGoodsByPage(pageReq, null);
         // 推荐商品
-        List<WilliamGoods> recommendGoodsByPage = williamGoodsService.getRecommendGoodsByPage(new PageReq(), null);
+        List<WilliamGoods> recommendGoodsByPage = williamGoodsService.getRecommendGoodsByPage(pageReq, null);
         // 新品上市
-        List<WilliamGoods> newGoodsPageCondition = williamGoodsService.getNewGoodsPageCondition(new PageConditionReq(), null);
-        // 猜你喜欢
+        PageConditionReq newGoodsPageCondition = new PageConditionReq();
+        newGoodsPageCondition.setTenantId(tenantId);
+        newGoodsPageCondition.setClient(client);
+        List<WilliamGoods> newGoodsPageList = williamGoodsService.getNewGoodsPageCondition(newGoodsPageCondition, null);
+        // 推荐分类
+        PageConditionReq goodsCategroyCondition = new PageConditionReq();
+        goodsCategroyCondition.setKeyName("1");
+        goodsCategroyCondition.setTenantId(tenantId);
+        goodsCategroyCondition.setClient(client);
+        List<WilliamGoodsCategory> recommendCategoryByPage = williamGoodsCategoryService.getRecommendCategoryByPage(pageConditionReq);
+        // 猜你喜欢 查收藏商品
         // .....
         // 首页广告图片
         HomePageAdvResp homePageAdv = williamAdvService.getHomePageAdv(tenantId, client, null);
         homePageResp.setHomeNoticList(noticeList);
         homePageResp.setHotGoodsList(hotGoodsByPage);
         homePageResp.setRecommendGoodsList(recommendGoodsByPage);
+        homePageResp.setRecommendGoodsCategory(recommendCategoryByPage);
         homePageResp.setBannerList(bannerList);
-        homePageResp.setNewGoodsList(newGoodsPageCondition);
+        homePageResp.setNewGoodsList(newGoodsPageList);
         homePageResp.setHomePageAdvResp(homePageAdv);
         return homePageResp;
     }

@@ -763,6 +763,21 @@ limit #{pageSize} offset #{startPos}
     order by william_goods.id desc
   </select>
 
+  <!-- -->
+  <select id="getCollectGooodsByUid" resultType="com.william.pojo.WilliamGoods">
+     select
+     <include refid="Base_Column_List"/>
+    from william_goods
+    inner join william_customer_collect on william_customer_collect.cust_id = #{uid}
+    and william_goods.id = william_customer_collect.collect_id
+    and william_customer_collect.type = 1
+    where william_goods.tenant_id = #{tenantId}
+    and william_goods.client = #{client}
+    and william_goods.residue > 0
+    and william_goods.status = 1
+    and william_goods.putaway = 1
+  </select>
+
 
   <!-- 商品添加收藏数 -->
   <update id="addGoodsFavoriteById">

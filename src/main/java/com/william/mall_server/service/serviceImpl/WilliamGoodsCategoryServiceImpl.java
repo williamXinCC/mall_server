@@ -1,11 +1,14 @@
 package com.william.mall_server.service.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
 import com.william.constant.Constant;
 import com.william.mall_server.mapper.WilliamGoodsCategoryMapper;
 import com.william.mall_server.service.WilliamGoodsCategoryService;
 import com.william.pojo.WilliamGoodsCategory;
 import com.william.pojo.WilliamGoodsCategoryExample;
 import com.william.pojo.req.BaseRequest;
+import com.william.pojo.req.PageConditionReq;
+import com.william.pojo.req.PublicReq;
 import com.william.pojo.resp.CategoryTreeNodesResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +32,28 @@ public class WilliamGoodsCategoryServiceImpl implements WilliamGoodsCategoryServ
     @Autowired
     private WilliamGoodsCategoryMapper williamGoodsCategoryMapper;
 
+    /**
+     * 根据展示页面 查询推荐分类
+     * @author     xinchuang
+     * @param pageConditionReq :
+     * @return : java.util.List<com.william.pojo.WilliamGoodsCategory>
+     */
+    @Override
+    public List<WilliamGoodsCategory> getRecommendCategoryByPage(PageConditionReq pageConditionReq) {
+        Integer startPage = pageConditionReq.getStartPage() == null ? 1 : Integer.parseInt(pageConditionReq.getStartPage());
+        Integer pageSize = pageConditionReq.getPageSize() == null ? 10 : Integer.parseInt(pageConditionReq.getPageSize());
+        WilliamGoodsCategoryExample williamGoodsCategoryExample = new WilliamGoodsCategoryExample();
+        WilliamGoodsCategoryExample.Criteria criteria = williamGoodsCategoryExample.createCriteria();
+        criteria.andTenantIdEqualTo(pageConditionReq.getTenantId());
+        criteria.andClientEqualTo(pageConditionReq.getClient());
+        criteria.andRecommendPageEqualTo(Integer.parseInt(pageConditionReq.getKeyName()));
+        williamGoodsCategoryExample.setOrderByClause("seq asc");
+        PageHelper.startPage(startPage,pageSize,false);
+        return williamGoodsCategoryMapper.selectByExample(williamGoodsCategoryExample);
+    }
+
+
+    // ========================== 分类树 开始
     @Override
     public List<CategoryTreeNodesResp> getGoodsCategoryTreeList(BaseRequest baseRequest, String uid) {
         String tenantId = baseRequest.getTenantId();
@@ -56,7 +81,6 @@ public class WilliamGoodsCategoryServiceImpl implements WilliamGoodsCategoryServ
         List<CategoryTreeNodesResp> recursion = recursion(categoryTreeNodesRespList, tenantId, client);
         return recursion;
     }
-
 
     /**
      * 递归查询分类
@@ -104,4 +128,6 @@ public class WilliamGoodsCategoryServiceImpl implements WilliamGoodsCategoryServ
         categoryTreeNodesResp.setAvdImage(williamGoodsCategory.getImage());
         return categoryTreeNodesResp;
     }
+
+    // =====================================  分类树结束
 }
