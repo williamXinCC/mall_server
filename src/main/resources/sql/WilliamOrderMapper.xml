@@ -7,6 +7,8 @@
     <result column="after_status" property="afterStatus" jdbcType="INTEGER" />
     <result column="product_count" property="productCount" jdbcType="INTEGER" />
     <result column="product_amount_total" property="productAmountTotal" jdbcType="DECIMAL" />
+    <result column="coupon_id" property="couponId" jdbcType="CHAR" />
+    <result column="coupon_value" property="couponValue" jdbcType="INTEGER" />
     <result column="order_amount_total" property="orderAmountTotal" jdbcType="DECIMAL" />
     <result column="logistics_fee" property="logisticsFee" jdbcType="DECIMAL" />
     <result column="logistics_type" property="logisticsType" jdbcType="INTEGER" />
@@ -85,15 +87,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    william_order.order_id as order_id, william_order.order_status as order_status, william_order.after_status as after_status, 
-    william_order.product_count as product_count, william_order.product_amount_total as product_amount_total, 
-    william_order.order_amount_total as order_amount_total, william_order.logistics_fee as logistics_fee, 
-    william_order.logistics_type as logistics_type, william_order.address_id as address_id, 
-    william_order.pay_channel as pay_channel, william_order.out_trade_no as out_trade_no, 
-    william_order.escrow_trade_no as escrow_trade_no, william_order.order_type as order_type, 
-    william_order.order_create_id as order_create_id, date_format(william_order.order_create_time,'%Y-%m-%d %H:%i:%s') as order_create_time,
-    william_order.tenant_id as tenant_id, william_order.client as client, william_order.operate_permission as operate_permission, 
-    william_order.mod_id as mod_id, william_order.mod_time as mod_time, william_order.delete_id as delete_id, 
+    william_order.order_id as order_id, william_order.order_status as order_status, william_order.after_status as after_status,
+    william_order.product_count as product_count, william_order.product_amount_total as product_amount_total,
+    william_order.coupon_id as coupon_id, william_order.coupon_value as coupon_value,
+    william_order.order_amount_total as order_amount_total, william_order.logistics_fee as logistics_fee,
+    william_order.logistics_type as logistics_type, william_order.address_id as address_id,
+    william_order.pay_channel as pay_channel, william_order.out_trade_no as out_trade_no,
+    william_order.escrow_trade_no as escrow_trade_no, william_order.order_type as order_type,
+    william_order.order_create_id as order_create_id, william_order.order_create_time as order_create_time,
+    william_order.tenant_id as tenant_id, william_order.client as client, william_order.operate_permission as operate_permission,
+    william_order.mod_id as mod_id, william_order.mod_time as mod_time, william_order.delete_id as delete_id,
     william_order.delete_time as delete_time, william_order.status as status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamOrderExample" >
@@ -111,7 +114,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from william_order
     where william_order.order_id = #{orderId,jdbcType=CHAR}
@@ -127,22 +130,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.william.pojo.WilliamOrder" >
-    insert into william_order (order_id, order_status, after_status, 
-      product_count, product_amount_total, order_amount_total, 
-      logistics_fee, logistics_type, address_id, 
-      pay_channel, out_trade_no, escrow_trade_no, 
-      order_type, order_create_id, order_create_time, 
-      tenant_id, client, operate_permission, 
-      mod_id, mod_time, delete_id, 
-      delete_time, status)
-    values (#{orderId,jdbcType=CHAR}, #{orderStatus,jdbcType=INTEGER}, #{afterStatus,jdbcType=INTEGER}, 
-      #{productCount,jdbcType=INTEGER}, #{productAmountTotal,jdbcType=DECIMAL}, #{orderAmountTotal,jdbcType=DECIMAL}, 
-      #{logisticsFee,jdbcType=DECIMAL}, #{logisticsType,jdbcType=INTEGER}, #{addressId,jdbcType=CHAR}, 
-      #{payChannel,jdbcType=CHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{escrowTradeNo,jdbcType=VARCHAR}, 
-      #{orderType,jdbcType=INTEGER}, #{orderCreateId,jdbcType=CHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, 
-      #{tenantId,jdbcType=CHAR}, #{client,jdbcType=CHAR}, #{operatePermission,jdbcType=VARCHAR}, 
-      #{modId,jdbcType=CHAR}, #{modTime,jdbcType=TIMESTAMP}, #{deleteId,jdbcType=CHAR}, 
-      #{deleteTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    insert into william_order (order_id, order_status, after_status,
+    product_count, product_amount_total, coupon_id,
+    coupon_value, order_amount_total, logistics_fee,
+    logistics_type, address_id, pay_channel,
+    out_trade_no, escrow_trade_no, order_type,
+    order_create_id, order_create_time, tenant_id,
+    client, operate_permission, mod_id,
+    mod_time, delete_id, delete_time,
+    status)
+    values (#{orderId,jdbcType=CHAR}, #{orderStatus,jdbcType=INTEGER}, #{afterStatus,jdbcType=INTEGER},
+    #{productCount,jdbcType=INTEGER}, #{productAmountTotal,jdbcType=DECIMAL}, #{couponId,jdbcType=CHAR},
+    #{couponValue,jdbcType=INTEGER}, #{orderAmountTotal,jdbcType=DECIMAL}, #{logisticsFee,jdbcType=DECIMAL},
+    #{logisticsType,jdbcType=INTEGER}, #{addressId,jdbcType=CHAR}, #{payChannel,jdbcType=CHAR},
+    #{outTradeNo,jdbcType=VARCHAR}, #{escrowTradeNo,jdbcType=VARCHAR}, #{orderType,jdbcType=INTEGER},
+    #{orderCreateId,jdbcType=CHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=CHAR},
+    #{client,jdbcType=CHAR}, #{operatePermission,jdbcType=VARCHAR}, #{modId,jdbcType=CHAR},
+    #{modTime,jdbcType=TIMESTAMP}, #{deleteId,jdbcType=CHAR}, #{deleteTime,jdbcType=TIMESTAMP},
+    #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.william.pojo.WilliamOrder" >
     insert into william_order
@@ -161,6 +166,12 @@
       </if>
       <if test="productAmountTotal != null" >
         product_amount_total,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="couponValue != null" >
+        coupon_value,
       </if>
       <if test="orderAmountTotal != null" >
         order_amount_total,
@@ -232,6 +243,12 @@
       </if>
       <if test="productAmountTotal != null" >
         #{productAmountTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=CHAR},
+      </if>
+      <if test="couponValue != null" >
+        #{couponValue,jdbcType=INTEGER},
       </if>
       <if test="orderAmountTotal != null" >
         #{orderAmountTotal,jdbcType=DECIMAL},
@@ -313,6 +330,12 @@
       <if test="record.productAmountTotal != null" >
         product_amount_total = #{record.productAmountTotal,jdbcType=DECIMAL},
       </if>
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=CHAR},
+      </if>
+      <if test="record.couponValue != null" >
+        coupon_value = #{record.couponValue,jdbcType=INTEGER},
+      </if>
       <if test="record.orderAmountTotal != null" >
         order_amount_total = #{record.orderAmountTotal,jdbcType=DECIMAL},
       </if>
@@ -375,28 +398,30 @@
   <update id="updateByExample" parameterType="map" >
     update william_order
     set order_id = #{record.orderId,jdbcType=CHAR},
-      order_status = #{record.orderStatus,jdbcType=INTEGER},
-      after_status = #{record.afterStatus,jdbcType=INTEGER},
-      product_count = #{record.productCount,jdbcType=INTEGER},
-      product_amount_total = #{record.productAmountTotal,jdbcType=DECIMAL},
-      order_amount_total = #{record.orderAmountTotal,jdbcType=DECIMAL},
-      logistics_fee = #{record.logisticsFee,jdbcType=DECIMAL},
-      logistics_type = #{record.logisticsType,jdbcType=INTEGER},
-      address_id = #{record.addressId,jdbcType=CHAR},
-      pay_channel = #{record.payChannel,jdbcType=CHAR},
-      out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
-      escrow_trade_no = #{record.escrowTradeNo,jdbcType=VARCHAR},
-      order_type = #{record.orderType,jdbcType=INTEGER},
-      order_create_id = #{record.orderCreateId,jdbcType=CHAR},
-      order_create_time = #{record.orderCreateTime,jdbcType=TIMESTAMP},
-      tenant_id = #{record.tenantId,jdbcType=CHAR},
-      client = #{record.client,jdbcType=CHAR},
-      operate_permission = #{record.operatePermission,jdbcType=VARCHAR},
-      mod_id = #{record.modId,jdbcType=CHAR},
-      mod_time = #{record.modTime,jdbcType=TIMESTAMP},
-      delete_id = #{record.deleteId,jdbcType=CHAR},
-      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=INTEGER}
+    order_status = #{record.orderStatus,jdbcType=INTEGER},
+    after_status = #{record.afterStatus,jdbcType=INTEGER},
+    product_count = #{record.productCount,jdbcType=INTEGER},
+    product_amount_total = #{record.productAmountTotal,jdbcType=DECIMAL},
+    coupon_id = #{record.couponId,jdbcType=CHAR},
+    coupon_value = #{record.couponValue,jdbcType=INTEGER},
+    order_amount_total = #{record.orderAmountTotal,jdbcType=DECIMAL},
+    logistics_fee = #{record.logisticsFee,jdbcType=DECIMAL},
+    logistics_type = #{record.logisticsType,jdbcType=INTEGER},
+    address_id = #{record.addressId,jdbcType=CHAR},
+    pay_channel = #{record.payChannel,jdbcType=CHAR},
+    out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+    escrow_trade_no = #{record.escrowTradeNo,jdbcType=VARCHAR},
+    order_type = #{record.orderType,jdbcType=INTEGER},
+    order_create_id = #{record.orderCreateId,jdbcType=CHAR},
+    order_create_time = #{record.orderCreateTime,jdbcType=TIMESTAMP},
+    tenant_id = #{record.tenantId,jdbcType=CHAR},
+    client = #{record.client,jdbcType=CHAR},
+    operate_permission = #{record.operatePermission,jdbcType=VARCHAR},
+    mod_id = #{record.modId,jdbcType=CHAR},
+    mod_time = #{record.modTime,jdbcType=TIMESTAMP},
+    delete_id = #{record.deleteId,jdbcType=CHAR},
+    delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
+    status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -415,6 +440,12 @@
       </if>
       <if test="productAmountTotal != null" >
         product_amount_total = #{productAmountTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=CHAR},
+      </if>
+      <if test="couponValue != null" >
+        coupon_value = #{couponValue,jdbcType=INTEGER},
       </if>
       <if test="orderAmountTotal != null" >
         order_amount_total = #{orderAmountTotal,jdbcType=DECIMAL},
@@ -476,43 +507,45 @@
   <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamOrder" >
     update william_order
     set order_status = #{orderStatus,jdbcType=INTEGER},
-      after_status = #{afterStatus,jdbcType=INTEGER},
-      product_count = #{productCount,jdbcType=INTEGER},
-      product_amount_total = #{productAmountTotal,jdbcType=DECIMAL},
-      order_amount_total = #{orderAmountTotal,jdbcType=DECIMAL},
-      logistics_fee = #{logisticsFee,jdbcType=DECIMAL},
-      logistics_type = #{logisticsType,jdbcType=INTEGER},
-      address_id = #{addressId,jdbcType=CHAR},
-      pay_channel = #{payChannel,jdbcType=CHAR},
-      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
-      escrow_trade_no = #{escrowTradeNo,jdbcType=VARCHAR},
-      order_type = #{orderType,jdbcType=INTEGER},
-      order_create_id = #{orderCreateId,jdbcType=CHAR},
-      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
-      tenant_id = #{tenantId,jdbcType=CHAR},
-      client = #{client,jdbcType=CHAR},
-      operate_permission = #{operatePermission,jdbcType=VARCHAR},
-      mod_id = #{modId,jdbcType=CHAR},
-      mod_time = #{modTime,jdbcType=TIMESTAMP},
-      delete_id = #{deleteId,jdbcType=CHAR},
-      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
+    after_status = #{afterStatus,jdbcType=INTEGER},
+    product_count = #{productCount,jdbcType=INTEGER},
+    product_amount_total = #{productAmountTotal,jdbcType=DECIMAL},
+    coupon_id = #{couponId,jdbcType=CHAR},
+    coupon_value = #{couponValue,jdbcType=INTEGER},
+    order_amount_total = #{orderAmountTotal,jdbcType=DECIMAL},
+    logistics_fee = #{logisticsFee,jdbcType=DECIMAL},
+    logistics_type = #{logisticsType,jdbcType=INTEGER},
+    address_id = #{addressId,jdbcType=CHAR},
+    pay_channel = #{payChannel,jdbcType=CHAR},
+    out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+    escrow_trade_no = #{escrowTradeNo,jdbcType=VARCHAR},
+    order_type = #{orderType,jdbcType=INTEGER},
+    order_create_id = #{orderCreateId,jdbcType=CHAR},
+    order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+    tenant_id = #{tenantId,jdbcType=CHAR},
+    client = #{client,jdbcType=CHAR},
+    operate_permission = #{operatePermission,jdbcType=VARCHAR},
+    mod_id = #{modId,jdbcType=CHAR},
+    mod_time = #{modTime,jdbcType=TIMESTAMP},
+    delete_id = #{deleteId,jdbcType=CHAR},
+    delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+    status = #{status,jdbcType=INTEGER}
     where order_id = #{orderId,jdbcType=CHAR}
   </update>
   <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamOrderExample" >
-    select 
-<if test="distinct" > 
-distinct 
-</if> 
-<include refid="Base_Column_List" /> 
-from william_order
-<if test="_parameter != null" > 
-<include refid="Example_Where_Clause" /> 
-</if> 
-<if test="orderByClause != null" > 
-order by ${orderByClause} 
-</if> 
-limit #{pageSize} offset #{startPos} 
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit #{pageSize} offset #{startPos}
 
   </select>
 

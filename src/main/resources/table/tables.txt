@@ -13,6 +13,11 @@
 商品参数规格表 william_goods_attribute
 商品评价表 william_evaluate
 
+优惠券配置表 william_coupon
+客户优惠券表 william_coupon_customer
+优惠券商品表 william_coupon_goods
+
+
 订单表 william_order
 订单商品表 william_order_goods
 支付记录表 william_pay_record
