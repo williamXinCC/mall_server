@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.william.mall_server.mapper.WilliamCouponCustomerMapper" >
+
   <resultMap id="BaseResultMap" type="com.william.pojo.WilliamCouponCustomer" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="coupon_id" property="couponId" jdbcType="BIGINT" />
     <result column="coupon_count" property="couponCount" jdbcType="INTEGER" />
-    <result column="coupon_value" property="couponValue" jdbcType="DECIMAL" />
+    <result column="coupon_value" property="couponValue" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="CHAR" />
     <result column="member_name" property="memberName" jdbcType="VARCHAR" />
     <result column="get_type" property="getType" jdbcType="INTEGER" />
@@ -14,6 +15,7 @@
     <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
     <result column="order_id" property="orderId" jdbcType="CHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,12 +76,13 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    william_coupon_customer.id as id, william_coupon_customer.coupon_id as coupon_id, 
-    william_coupon_customer.coupon_count as coupon_count, william_coupon_customer.coupon_value as coupon_value, 
-    william_coupon_customer.member_id as member_id, william_coupon_customer.member_name as member_name, 
-    william_coupon_customer.get_type as get_type, william_coupon_customer.get_time as get_time, 
-    william_coupon_customer.use_status as use_status, william_coupon_customer.use_time as use_time, 
-    william_coupon_customer.order_id as order_id, william_coupon_customer.remark as remark
+    william_coupon_customer.id as id, william_coupon_customer.coupon_id as coupon_id,
+    william_coupon_customer.coupon_count as coupon_count, william_coupon_customer.coupon_value as coupon_value,
+    william_coupon_customer.member_id as member_id, william_coupon_customer.member_name as member_name,
+    william_coupon_customer.get_type as get_type, william_coupon_customer.get_time as get_time,
+    william_coupon_customer.use_status as use_status, william_coupon_customer.use_time as use_time,
+    william_coupon_customer.order_id as order_id, william_coupon_customer.remark as remark,
+    william_coupon_customer.status as status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamCouponCustomerExample" >
     select
@@ -96,7 +99,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from william_coupon_customer
     where william_coupon_customer.id = #{id,jdbcType=BIGINT}
@@ -112,16 +115,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.william.pojo.WilliamCouponCustomer" >
-    insert into william_coupon_customer (id, coupon_id, coupon_count, 
-      coupon_value, member_id, member_name, 
-      get_type, get_time, use_status, 
-      use_time, order_id, remark
-      )
-    values (#{id,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT}, #{couponCount,jdbcType=INTEGER}, 
-      #{couponValue,jdbcType=DECIMAL}, #{memberId,jdbcType=CHAR}, #{memberName,jdbcType=VARCHAR}, 
-      #{getType,jdbcType=INTEGER}, #{getTime,jdbcType=TIMESTAMP}, #{useStatus,jdbcType=INTEGER}, 
-      #{useTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into william_coupon_customer (id, coupon_id, coupon_count,
+    coupon_value, member_id, member_name,
+    get_type, get_time, use_status,
+    use_time, order_id, remark,
+    status)
+    values (#{id,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT}, #{couponCount,jdbcType=INTEGER},
+    #{couponValue,jdbcType=INTEGER}, #{memberId,jdbcType=CHAR}, #{memberName,jdbcType=VARCHAR},
+    #{getType,jdbcType=INTEGER}, #{getTime,jdbcType=TIMESTAMP}, #{useStatus,jdbcType=INTEGER},
+    #{useTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.william.pojo.WilliamCouponCustomer" >
     insert into william_coupon_customer
@@ -162,6 +165,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -174,7 +180,7 @@
         #{couponCount,jdbcType=INTEGER},
       </if>
       <if test="couponValue != null" >
-        #{couponValue,jdbcType=DECIMAL},
+        #{couponValue,jdbcType=INTEGER},
       </if>
       <if test="memberId != null" >
         #{memberId,jdbcType=CHAR},
@@ -200,6 +206,9 @@
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.william.pojo.WilliamCouponCustomerExample" resultType="java.lang.Integer" >
@@ -221,7 +230,7 @@
         coupon_count = #{record.couponCount,jdbcType=INTEGER},
       </if>
       <if test="record.couponValue != null" >
-        coupon_value = #{record.couponValue,jdbcType=DECIMAL},
+        coupon_value = #{record.couponValue,jdbcType=INTEGER},
       </if>
       <if test="record.memberId != null" >
         member_id = #{record.memberId,jdbcType=CHAR},
@@ -247,6 +256,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -255,17 +267,18 @@
   <update id="updateByExample" parameterType="map" >
     update william_coupon_customer
     set id = #{record.id,jdbcType=BIGINT},
-      coupon_id = #{record.couponId,jdbcType=BIGINT},
-      coupon_count = #{record.couponCount,jdbcType=INTEGER},
-      coupon_value = #{record.couponValue,jdbcType=DECIMAL},
-      member_id = #{record.memberId,jdbcType=CHAR},
-      member_name = #{record.memberName,jdbcType=VARCHAR},
-      get_type = #{record.getType,jdbcType=INTEGER},
-      get_time = #{record.getTime,jdbcType=TIMESTAMP},
-      use_status = #{record.useStatus,jdbcType=INTEGER},
-      use_time = #{record.useTime,jdbcType=TIMESTAMP},
-      order_id = #{record.orderId,jdbcType=CHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+    coupon_id = #{record.couponId,jdbcType=BIGINT},
+    coupon_count = #{record.couponCount,jdbcType=INTEGER},
+    coupon_value = #{record.couponValue,jdbcType=INTEGER},
+    member_id = #{record.memberId,jdbcType=CHAR},
+    member_name = #{record.memberName,jdbcType=VARCHAR},
+    get_type = #{record.getType,jdbcType=INTEGER},
+    get_time = #{record.getTime,jdbcType=TIMESTAMP},
+    use_status = #{record.useStatus,jdbcType=INTEGER},
+    use_time = #{record.useTime,jdbcType=TIMESTAMP},
+    order_id = #{record.orderId,jdbcType=CHAR},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -280,7 +293,7 @@
         coupon_count = #{couponCount,jdbcType=INTEGER},
       </if>
       <if test="couponValue != null" >
-        coupon_value = #{couponValue,jdbcType=DECIMAL},
+        coupon_value = #{couponValue,jdbcType=INTEGER},
       </if>
       <if test="memberId != null" >
         member_id = #{memberId,jdbcType=CHAR},
@@ -306,48 +319,56 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamCouponCustomer" >
     update william_coupon_customer
     set coupon_id = #{couponId,jdbcType=BIGINT},
-      coupon_count = #{couponCount,jdbcType=INTEGER},
-      coupon_value = #{couponValue,jdbcType=DECIMAL},
-      member_id = #{memberId,jdbcType=CHAR},
-      member_name = #{memberName,jdbcType=VARCHAR},
-      get_type = #{getType,jdbcType=INTEGER},
-      get_time = #{getTime,jdbcType=TIMESTAMP},
-      use_status = #{useStatus,jdbcType=INTEGER},
-      use_time = #{useTime,jdbcType=TIMESTAMP},
-      order_id = #{orderId,jdbcType=CHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+    coupon_count = #{couponCount,jdbcType=INTEGER},
+    coupon_value = #{couponValue,jdbcType=INTEGER},
+    member_id = #{memberId,jdbcType=CHAR},
+    member_name = #{memberName,jdbcType=VARCHAR},
+    get_type = #{getType,jdbcType=INTEGER},
+    get_time = #{getTime,jdbcType=TIMESTAMP},
+    use_status = #{useStatus,jdbcType=INTEGER},
+    use_time = #{useTime,jdbcType=TIMESTAMP},
+    order_id = #{orderId,jdbcType=CHAR},
+    remark = #{remark,jdbcType=VARCHAR},
+    status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamCouponCustomerExample" >
-    select 
-<if test="distinct" > 
-distinct 
-</if> 
-<include refid="Base_Column_List" /> 
-from william_coupon_customer
-<if test="_parameter != null" > 
-<include refid="Example_Where_Clause" /> 
-</if> 
-<if test="orderByClause != null" > 
-order by ${orderByClause} 
-</if> 
-limit #{pageSize} offset #{startPos} 
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_coupon_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit #{pageSize} offset #{startPos}
 
   </select>
 
-  <select id="getCouponByType" resultType="com.william.pojo.resp.CustomerCouponListResp">
+  <!-- 查询 我的优惠券 -->
+  <select id="getCouponByType" resultType="com.william.pojo.resp.CustomerCouponResp">
       select
       william_coupon.name as name,
       william_coupon.image as image,
       william_coupon.use_type as useType,
       william_coupon.use_level as useLevel,
+      william_coupon.count as count,
+      william_coupon.coupon_type as couponType,
       william_coupon.coupon_type_value as couponTypeValue,
+      william_coupon.coupon_type_discount as couponTypeDiscount,
       william_coupon.per_limit as perLimit,
       william_coupon.residue_count as residueCount,
       date_format(william_coupon.expiry_start_time,'%Y-%m-%d') as expiryStartTime,
@@ -361,4 +382,36 @@ limit #{pageSize} offset #{startPos}
       and william_coupon_customer.use_status = #{type}
       order by william_coupon_customer.id desc
   </select>
+
+  <!-- 优惠券详情 -->
+  <select id="getCouponDetail" resultType="com.william.pojo.resp.CustomerCouponResp">
+      select
+      william_coupon.name as name,
+      william_coupon.image as image,
+      william_coupon.use_type as useType,
+      william_coupon.use_level as useLevel,
+      william_coupon.count as count,
+      william_coupon.coupon_type as couponType,
+      william_coupon.coupon_type_value as couponTypeValue,
+      william_coupon.coupon_type_discount as couponTypeDiscount,
+      william_coupon.per_limit as perLimit,
+      william_coupon.residue_count as residueCount,
+      date_format(william_coupon.expiry_start_time,'%Y-%m-%d') as expiryStartTime,
+      date_format(william_coupon.expiry_end_time,'%Y-%m-%d') as expiryEndTime,
+      william_coupon_customer.coupon_count as couponCount,
+      date_format(william_coupon_customer.use_time ,'%Y-%m-%d') as useTime
+      from william_coupon
+      inner join william_coupon on william_coupon_customer.coupon_id = william_coupon.id
+      where
+      william_coupon.id = #{couponId}
+  </select>
+
+  <!-- 客户id 优惠券id 查询-->
+  <select id="selectByCustomerIdAndCouponId" resultType="com.william.pojo.WilliamCouponCustomer">
+       select
+       <include refid="Base_Column_List"/>
+       from william_coupon_customer
+       where william_coupon_customer.coupon_id = #{couponId} and william_coupon_customer.member_id = #{uid}
+  </select>
+
 </mapper>

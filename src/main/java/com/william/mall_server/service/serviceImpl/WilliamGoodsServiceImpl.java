@@ -2,6 +2,7 @@ package com.william.mall_server.service.serviceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.william.constant.Constant;
+import com.william.mall_server.mapper.WilliamBrowsingHistoryMapper;
 import com.william.mall_server.mapper.WilliamGoodsAttributeMapper;
 import com.william.mall_server.mapper.WilliamGoodsMapper;
 import com.william.mall_server.service.WilliamGoodsService;
@@ -12,6 +13,7 @@ import com.william.pojo.WilliamGoodsExample;
 import com.william.pojo.req.PageConditionReq;
 import com.william.pojo.req.PageReq;
 import com.william.pojo.req.PublicReq;
+import com.william.pojo.resp.FootmarkResp;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class WilliamGoodsServiceImpl implements WilliamGoodsService {
     @Autowired
     private WilliamGoodsAttributeMapper williamGoodsAttributeMapper;
 
+    @Autowired
+    private WilliamBrowsingHistoryMapper williamBrowsingHistoryMapper;
+
     /**
      * 猜你喜欢  ---- 待完善
      * @author     xinchuang
@@ -42,10 +47,18 @@ public class WilliamGoodsServiceImpl implements WilliamGoodsService {
      */
     @Override
     public List<WilliamGoods> getGuessYouLike(PageConditionReq pageConditionReq, String uid) {
+        String tenantId = pageConditionReq.getTenantId();
+        String client = pageConditionReq.getClient();
         Integer startPage = pageConditionReq.getStartPage() == null ? 1 : Integer.parseInt(pageConditionReq.getStartPage());
         Integer pageSize = pageConditionReq.getPageSize() == null ? 10 : Integer.parseInt(pageConditionReq.getPageSize());
         // 从足迹中搜索,去重后,获取同类商品
-        return null;
+        List<FootmarkResp> footmarkByUid = williamBrowsingHistoryMapper.getFootmarkByUid(uid);
+        String goodsId = footmarkByUid.get(0).getGoodsId();
+        WilliamGoods williamGoods = williamGoodsMapper.selectByPrimaryKey(goodsId);
+        // 分类ID
+        Integer categoryId = williamGoods.getCategoryId();
+        PageHelper.startPage(startPage,pageSize,false);
+        return williamGoodsMapper.selectByCategoryIdAndGuessLike(tenantId,client,categoryId);
     }
 
     /**

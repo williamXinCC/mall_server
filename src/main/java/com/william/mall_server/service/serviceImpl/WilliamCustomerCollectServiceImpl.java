@@ -7,7 +7,9 @@ import com.william.mall_server.mapper.WilliamGoodsMapper;
 import com.william.mall_server.service.WilliamCustomerCollectService;
 import com.william.pojo.WilliamCustomerCollect;
 import com.william.pojo.WilliamCustomerCollectExample;
+import com.william.pojo.WilliamGoods;
 import com.william.pojo.req.CollectReq;
+import com.william.pojo.req.PageConditionReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,6 +115,18 @@ public class WilliamCustomerCollectServiceImpl implements WilliamCustomerCollect
             return 1;
         }
         return 2;
+    }
+
+    /**
+     * 我的收藏
+     * @author     xinchuang
+     * @param pageConditionReq :
+     * @param uid :
+     * @return : java.util.List<com.william.pojo.WilliamGoods>
+     */
+    @Override
+    public List<WilliamGoods> getMyCollect(PageConditionReq pageConditionReq, String uid) {
+        return williamGoodsMapper.getMyCollect(uid);
     }
 
     private WilliamCustomerCollect doPojo(CollectReq collectReq,String uid,Integer status) {

@@ -32,7 +32,7 @@ public class WilliamGoodsController {
      * @param uid :
      * @return : java.util.List<com.william.pojo.WilliamGoods>
      */
-    @PostMapping(value = "/goods/getGuessYouLike")
+    @PostMapping(value = "/getGuessYouLike")
     public List<WilliamGoods> getGuessYouLike(@RequestBody PageConditionReq pageConditionReq,@RequestParam(value = "uid",required = false) String uid){
         return williamGoodsService.getGuessYouLike(pageConditionReq,uid);
     }

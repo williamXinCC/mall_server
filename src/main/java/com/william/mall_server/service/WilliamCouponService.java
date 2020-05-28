@@ -1,9 +1,13 @@
 package com.william.mall_server.service;
 
+import com.william.pojo.WilliamCoupon;
+import com.william.pojo.req.BaseRequest;
 import com.william.pojo.req.PageConditionReq;
-import com.william.pojo.resp.CustomerCouponListResp;
+import com.william.pojo.req.PublicReq;
+import com.william.pojo.resp.CustomerCouponResp;
 
 import java.util.List;
+
 
 /**
  * @author xinchuang
@@ -13,5 +17,13 @@ import java.util.List;
  */
 public interface WilliamCouponService {
 
-    List<CustomerCouponListResp> getCouponByType(PageConditionReq pageConditionReq, String uid);
+    List<CustomerCouponResp> getCouponByType(PageConditionReq pageConditionReq, String uid);
+
+    List<WilliamCoupon> getCouponCenter(BaseRequest baseRequest, String uid);
+
+    CustomerCouponResp getCouponDetail(PublicReq publicReq, String uid);
+
+    Integer saveCoupon(PublicReq publicReq, String uid);
+
+    void deleteExpireCoupon(BaseRequest baseRequest, String uid);
 }

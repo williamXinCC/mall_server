@@ -1,6 +1,7 @@
 package com.william.mall_server.controller;
 
 import com.william.mall_server.service.WilliamLoginService;
+import com.william.pojo.req.BaseRequest;
 import com.william.pojo.req.LoginByCaptchaOrPassword;
 import com.william.pojo.resp.LoginResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,18 @@ public class WilliamLoginController {
 
     @Autowired
     private WilliamLoginService williamLoginService;
+
+    /**
+     * token登录
+     * @author     xinchuang
+     * @param baseRequest :
+     * @param token :
+     * @return : com.william.pojo.resp.LoginResp
+     */
+    @PostMapping(value = "/loginByToken")
+    public LoginResp loginByToken(@RequestBody BaseRequest baseRequest, @RequestParam("token") String token,@RequestParam("uid") String uid){
+        return williamLoginService.loginByToken(baseRequest,token,uid);
+    }
 
     /**
      * 手机验证码登录

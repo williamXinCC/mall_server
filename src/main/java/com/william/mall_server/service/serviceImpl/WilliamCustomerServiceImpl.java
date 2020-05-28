@@ -7,6 +7,8 @@ import com.william.pojo.Result;
 import com.william.pojo.WilliamCustomer;
 import com.william.pojo.req.BaseRequest;
 import com.william.pojo.req.UpdateCustomerReq;
+import com.william.pojo.req.UpdatePassword;
+import com.william.utils.Md5Util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,16 @@ public class WilliamCustomerServiceImpl implements WilliamCustomerService {
         BeanUtils.copyProperties(updateCustomerReq,williamCustomer);
         williamCustomerMapper.updateByPrimaryKeySelective(williamCustomer);
         return Result.getResult(RespCodeAndMsg.OPERATE_SUCCESS);
+    }
+
+    @Override
+    public void updatePassword(UpdatePassword updatePassword, String uid) {
+        String password = updatePassword.getPassword();
+        String md5Password = Md5Util.md5(password);
+        WilliamCustomer williamCustomer = new WilliamCustomer();
+        williamCustomer.setCustomerPassword(md5Password);
+        williamCustomer.setCustomerId(uid);
+        williamCustomerMapper.updateByPrimaryKeySelective(williamCustomer);
     }
 
 }

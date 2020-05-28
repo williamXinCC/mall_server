@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.william.pojo.WilliamCouponCustomer;
 import com.william.pojo.WilliamCouponCustomerExample;
-import com.william.pojo.resp.CustomerCouponListResp;
+import com.william.pojo.resp.CustomerCouponResp;
 import org.apache.ibatis.annotations.Param;
 
 public interface WilliamCouponCustomerMapper {
@@ -33,5 +33,9 @@ public interface WilliamCouponCustomerMapper {
 
     List<WilliamCouponCustomer> selectPage(WilliamCouponCustomerExample example);
 
-    List<CustomerCouponListResp> getCouponByType(@Param("type") String type,@Param("uid") String uid);
+    List<CustomerCouponResp> getCouponByType(@Param("type") String type, @Param("uid") String uid);
+
+    CustomerCouponResp getCouponDetail(String couponId);
+
+    WilliamCouponCustomer selectByCustomerIdAndCouponId(@Param("uid")String uid,@Param("couponId") Long id);
 }

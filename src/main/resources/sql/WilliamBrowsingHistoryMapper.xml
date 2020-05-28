@@ -351,6 +351,5 @@ limit #{pageSize} offset #{startPos}
     INNER JOIN william_goods ON william_browsing_history.goods_id = william_goods.id
     where william_browsing_history.customer_id = #{uid}
     order by william_browsing_history.id desc
-
   </select>
 </mapper>

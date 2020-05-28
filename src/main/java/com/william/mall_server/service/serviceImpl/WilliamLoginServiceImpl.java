@@ -1,17 +1,22 @@
 package com.william.mall_server.service.serviceImpl;
 
 import com.william.constant.Constant;
+import com.william.constant.Consts;
 import com.william.mall_server.mapper.WilliamCustomerMapper;
 import com.william.mall_server.redis.RedisService;
 import com.william.mall_server.service.WilliamLoginService;
 import com.william.mall_server.token.TokenTools;
 import com.william.pojo.WilliamCustomer;
+import com.william.pojo.req.BaseRequest;
 import com.william.pojo.req.LoginByCaptchaOrPassword;
 import com.william.pojo.resp.LoginResp;
 import com.william.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -63,6 +68,28 @@ public class WilliamLoginServiceImpl implements WilliamLoginService {
             if(Objects.equals(customerPassword,password)){
                 return getLoginResp(loginByCaptchaOrPassword, williamCustomer.getCustomerId(), williamCustomer);
             }
+        }
+        return null;
+    }
+
+    /**
+     * token登录
+     * @author     xinchuang
+     * @param baseRequest :
+     * @param uid :
+     * @return : com.william.pojo.resp.LoginResp
+     */
+    @Override
+    public LoginResp loginByToken(BaseRequest baseRequest,String token, String uid) {
+        // 获取token
+        String userToken = redisService.getStr(uid.concat(Consts.LOGIN_TOKEN_SUFFIX));
+        if(userToken.equals(token)){
+            // 增加token过期时间
+            redisService.setExpire(uid.concat(Consts.LOGIN_TOKEN_SUFFIX),Consts.REDIS_TOKEN_EXPIRE_TIME);
+            WilliamCustomer williamCustomer = williamCustomerMapper.selectByPrimaryKey(uid);
+            LoginResp loginResp = new LoginResp();
+            loginResp.setCustomer(williamCustomer);
+            loginResp.setAccessToken(userToken);
         }
         return null;
     }

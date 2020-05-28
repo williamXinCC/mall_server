@@ -40,4 +40,9 @@ public interface WilliamGoodsMapper {
 
     // 收藏商品
     List<WilliamGoods> getCollectGooodsByUid(@Param("tenantId") String tenantId,@Param("client") String client,@Param("uid") String uid);
+
+    // 猜你喜欢
+    List<WilliamGoods> selectByCategoryIdAndGuessLike(@Param("tenantId") String tenantId,@Param("client") String client,@Param("categoryId") Integer categoryId);
+
+    List<WilliamGoods> getMyCollect(String uid);
 }

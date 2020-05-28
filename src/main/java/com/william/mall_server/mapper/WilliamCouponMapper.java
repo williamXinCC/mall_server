@@ -30,4 +30,5 @@ public interface WilliamCouponMapper {
     int updateByPrimaryKey(WilliamCoupon record);
 
     List<WilliamCoupon> selectPage(WilliamCouponExample example);
+
 }

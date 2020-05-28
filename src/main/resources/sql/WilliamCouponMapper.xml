@@ -13,7 +13,8 @@
     <result column="per_limit" property="perLimit" jdbcType="INTEGER" />
     <result column="use_level" property="useLevel" jdbcType="INTEGER" />
     <result column="coupon_type" property="couponType" jdbcType="INTEGER" />
-    <result column="coupon_type_value" property="couponTypeValue" jdbcType="VARCHAR" />
+    <result column="coupon_type_value" property="couponTypeValue" jdbcType="INTEGER" />
+    <result column="coupon_type_discount" property="couponTypeDiscount" jdbcType="VARCHAR" />
     <result column="use_type" property="useType" jdbcType="INTEGER" />
     <result column="use_type_value" property="useTypeValue" jdbcType="CHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -93,9 +94,9 @@
     william_coupon.image as image, william_coupon.platform as platform, william_coupon.count as count, 
     william_coupon.residue_count as residue_count, william_coupon.amount as amount, william_coupon.per_limit as per_limit, 
     william_coupon.use_level as use_level, william_coupon.coupon_type as coupon_type, 
-    william_coupon.coupon_type_value as coupon_type_value, william_coupon.use_type as use_type, 
-    william_coupon.use_type_value as use_type_value, william_coupon.remark as remark, 
-    william_coupon.member_level as member_level, william_coupon.expiry_type as expiry_type, 
+    william_coupon.coupon_type_value as coupon_type_value, william_coupon.coupon_type_discount as coupon_type_discount, 
+    william_coupon.use_type as use_type, william_coupon.use_type_value as use_type_value, 
+    william_coupon.remark as remark, william_coupon.member_level as member_level, william_coupon.expiry_type as expiry_type, 
     william_coupon.expiry_value as expiry_value, william_coupon.expiry_start_time as expiry_start_time, 
     william_coupon.expiry_end_time as expiry_end_time, william_coupon.create_id as create_id, 
     william_coupon.create_time as create_time, william_coupon.mod_id as mod_id, william_coupon.mod_time as mod_time, 
@@ -136,20 +137,22 @@
       image, platform, count, 
       residue_count, amount, per_limit, 
       use_level, coupon_type, coupon_type_value, 
-      use_type, use_type_value, remark, 
-      member_level, expiry_type, expiry_value, 
-      expiry_start_time, expiry_end_time, create_id, 
-      create_time, mod_id, mod_time, 
-      tenant_id, client, status)
+      coupon_type_discount, use_type, use_type_value, 
+      remark, member_level, expiry_type, 
+      expiry_value, expiry_start_time, expiry_end_time, 
+      create_id, create_time, mod_id, 
+      mod_time, tenant_id, client, 
+      status)
     values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{image,jdbcType=VARCHAR}, #{platform,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, 
       #{residueCount,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{perLimit,jdbcType=INTEGER}, 
-      #{useLevel,jdbcType=INTEGER}, #{couponType,jdbcType=INTEGER}, #{couponTypeValue,jdbcType=VARCHAR}, 
-      #{useType,jdbcType=INTEGER}, #{useTypeValue,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{memberLevel,jdbcType=INTEGER}, #{expiryType,jdbcType=INTEGER}, #{expiryValue,jdbcType=INTEGER}, 
-      #{expiryStartTime,jdbcType=TIMESTAMP}, #{expiryEndTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{modId,jdbcType=CHAR}, #{modTime,jdbcType=TIMESTAMP}, 
-      #{tenantId,jdbcType=CHAR}, #{client,jdbcType=CHAR}, #{status,jdbcType=INTEGER})
+      #{useLevel,jdbcType=INTEGER}, #{couponType,jdbcType=INTEGER}, #{couponTypeValue,jdbcType=INTEGER}, 
+      #{couponTypeDiscount,jdbcType=VARCHAR}, #{useType,jdbcType=INTEGER}, #{useTypeValue,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{memberLevel,jdbcType=INTEGER}, #{expiryType,jdbcType=INTEGER}, 
+      #{expiryValue,jdbcType=INTEGER}, #{expiryStartTime,jdbcType=TIMESTAMP}, #{expiryEndTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modId,jdbcType=CHAR}, 
+      #{modTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=CHAR}, #{client,jdbcType=CHAR}, 
+      #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.william.pojo.WilliamCoupon" >
     insert into william_coupon
@@ -189,6 +192,9 @@
       </if>
       <if test="couponTypeValue != null" >
         coupon_type_value,
+      </if>
+      <if test="couponTypeDiscount != null" >
+        coupon_type_discount,
       </if>
       <if test="useType != null" >
         use_type,
@@ -271,7 +277,10 @@
         #{couponType,jdbcType=INTEGER},
       </if>
       <if test="couponTypeValue != null" >
-        #{couponTypeValue,jdbcType=VARCHAR},
+        #{couponTypeValue,jdbcType=INTEGER},
+      </if>
+      <if test="couponTypeDiscount != null" >
+        #{couponTypeDiscount,jdbcType=VARCHAR},
       </if>
       <if test="useType != null" >
         #{useType,jdbcType=INTEGER},
@@ -363,7 +372,10 @@
         coupon_type = #{record.couponType,jdbcType=INTEGER},
       </if>
       <if test="record.couponTypeValue != null" >
-        coupon_type_value = #{record.couponTypeValue,jdbcType=VARCHAR},
+        coupon_type_value = #{record.couponTypeValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponTypeDiscount != null" >
+        coupon_type_discount = #{record.couponTypeDiscount,jdbcType=VARCHAR},
       </if>
       <if test="record.useType != null" >
         use_type = #{record.useType,jdbcType=INTEGER},
@@ -428,7 +440,8 @@
       per_limit = #{record.perLimit,jdbcType=INTEGER},
       use_level = #{record.useLevel,jdbcType=INTEGER},
       coupon_type = #{record.couponType,jdbcType=INTEGER},
-      coupon_type_value = #{record.couponTypeValue,jdbcType=VARCHAR},
+      coupon_type_value = #{record.couponTypeValue,jdbcType=INTEGER},
+      coupon_type_discount = #{record.couponTypeDiscount,jdbcType=VARCHAR},
       use_type = #{record.useType,jdbcType=INTEGER},
       use_type_value = #{record.useTypeValue,jdbcType=CHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
@@ -482,7 +495,10 @@
         coupon_type = #{couponType,jdbcType=INTEGER},
       </if>
       <if test="couponTypeValue != null" >
-        coupon_type_value = #{couponTypeValue,jdbcType=VARCHAR},
+        coupon_type_value = #{couponTypeValue,jdbcType=INTEGER},
+      </if>
+      <if test="couponTypeDiscount != null" >
+        coupon_type_discount = #{couponTypeDiscount,jdbcType=VARCHAR},
       </if>
       <if test="useType != null" >
         use_type = #{useType,jdbcType=INTEGER},
@@ -544,7 +560,8 @@
       per_limit = #{perLimit,jdbcType=INTEGER},
       use_level = #{useLevel,jdbcType=INTEGER},
       coupon_type = #{couponType,jdbcType=INTEGER},
-      coupon_type_value = #{couponTypeValue,jdbcType=VARCHAR},
+      coupon_type_value = #{couponTypeValue,jdbcType=INTEGER},
+      coupon_type_discount = #{couponTypeDiscount,jdbcType=VARCHAR},
       use_type = #{useType,jdbcType=INTEGER},
       use_type_value = #{useTypeValue,jdbcType=CHAR},
       remark = #{remark,jdbcType=VARCHAR},
@@ -578,4 +595,7 @@ order by ${orderByClause}
 limit #{pageSize} offset #{startPos} 
 
   </select>
+
+  <!-- 领券中信 -->
+  <select id="selectCouponCenter"></select>
 </mapper>

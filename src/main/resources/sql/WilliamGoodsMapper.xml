@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.william.mall_server.mapper.WilliamGoodsMapper" >
+
   <resultMap id="BaseResultMap" type="com.william.pojo.WilliamGoods" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="VARCHAR" />
@@ -23,11 +24,12 @@
     <result column="favorite" property="favorite" jdbcType="INTEGER" />
     <result column="category_id" property="categoryId" jdbcType="INTEGER" />
     <result column="title_category_id" property="titleCategoryId" jdbcType="INTEGER" />
+    <result column="guess_ulike" property="guessUlike" jdbcType="INTEGER" />
     <result column="putaway" property="putaway" jdbcType="INTEGER" />
     <result column="describes" property="describes" jdbcType="VARCHAR" />
     <result column="imgs" property="imgs" jdbcType="VARCHAR" />
-    <result column="detail_banner_imgs" property="detailBannerImgs" jdbcType="VARCHAR" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="detail_banner_imgs" property="detailBannerImgs" jdbcType="CHAR" />
+    <result column="detail" property="detail" jdbcType="CHAR" />
     <result column="goods_type" property="goodsType" jdbcType="INTEGER" />
     <result column="max_buy" property="maxBuy" jdbcType="INTEGER" />
     <result column="ship_address" property="shipAddress" jdbcType="VARCHAR" />
@@ -100,19 +102,20 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    william_goods.id as id, william_goods.code as code, william_goods.name as name, william_goods.title as title, 
-    william_goods.sell as sell, william_goods.market_sell as market_sell, william_goods.base_value as base_value, 
-    william_goods.discount as discount, william_goods.sell_total as sell_total, william_goods.sell_value_total as sell_value_total, 
-    william_goods.exchange_type as exchange_type, william_goods.exchange_point as exchange_point, 
-    william_goods.give_point as give_point, william_goods.user_point as user_point, william_goods.total as total, 
-    william_goods.residue as residue, william_goods.month_sell as month_sell, william_goods.service_tags as service_tags, 
-    william_goods.favorite as favorite, william_goods.category_id as category_id, william_goods.title_category_id as title_category_id, 
-    william_goods.putaway as putaway, william_goods.describes as describes, william_goods.imgs as imgs, 
-    william_goods.detail_banner_imgs as detail_banner_imgs, william_goods.detail as detail, 
-    william_goods.goods_type as goods_type, william_goods.max_buy as max_buy, william_goods.ship_address as ship_address, 
-    william_goods.status as status, william_goods.create_time as create_time, william_goods.create_name as create_name, 
-    william_goods.create_id as create_id, william_goods.update_time as update_time, william_goods.update_name as update_name, 
-    william_goods.update_id as update_id, william_goods.tenant_id as tenant_id, william_goods.client as client
+    william_goods.id as id, william_goods.code as code, william_goods.name as name, william_goods.title as title,
+    william_goods.sell as sell, william_goods.market_sell as market_sell, william_goods.base_value as base_value,
+    william_goods.discount as discount, william_goods.sell_total as sell_total, william_goods.sell_value_total as sell_value_total,
+    william_goods.exchange_type as exchange_type, william_goods.exchange_point as exchange_point,
+    william_goods.give_point as give_point, william_goods.user_point as user_point, william_goods.total as total,
+    william_goods.residue as residue, william_goods.month_sell as month_sell, william_goods.service_tags as service_tags,
+    william_goods.favorite as favorite, william_goods.category_id as category_id, william_goods.title_category_id as title_category_id,
+    william_goods.guess_ulike as guess_ulike, william_goods.putaway as putaway, william_goods.describes as describes,
+    william_goods.imgs as imgs, william_goods.detail_banner_imgs as detail_banner_imgs,
+    william_goods.detail as detail, william_goods.goods_type as goods_type, william_goods.max_buy as max_buy,
+    william_goods.ship_address as ship_address, william_goods.status as status, william_goods.create_time as create_time,
+    william_goods.create_name as create_name, william_goods.create_id as create_id, william_goods.update_time as update_time,
+    william_goods.update_name as update_name, william_goods.update_id as update_id, william_goods.tenant_id as tenant_id,
+    william_goods.client as client
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamGoodsExample" >
     select
@@ -129,7 +132,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from william_goods
     where william_goods.id = #{id,jdbcType=VARCHAR}
@@ -145,32 +148,34 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.william.pojo.WilliamGoods" >
-    insert into william_goods (id, code, name, 
-      title, sell, market_sell, 
-      base_value, discount, sell_total, 
-      sell_value_total, exchange_type, exchange_point, 
-      give_point, user_point, total, 
-      residue, month_sell, service_tags, 
-      favorite, category_id, title_category_id, 
-      putaway, describes, imgs, 
-      detail_banner_imgs, detail, goods_type, 
-      max_buy, ship_address, status, 
-      create_time, create_name, create_id, 
-      update_time, update_name, update_id, 
-      tenant_id, client)
-    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{sell,jdbcType=DECIMAL}, #{marketSell,jdbcType=DECIMAL}, 
-      #{baseValue,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{sellTotal,jdbcType=INTEGER}, 
-      #{sellValueTotal,jdbcType=DECIMAL}, #{exchangeType,jdbcType=INTEGER}, #{exchangePoint,jdbcType=INTEGER}, 
-      #{givePoint,jdbcType=INTEGER}, #{userPoint,jdbcType=INTEGER}, #{total,jdbcType=INTEGER}, 
-      #{residue,jdbcType=INTEGER}, #{monthSell,jdbcType=INTEGER}, #{serviceTags,jdbcType=VARCHAR}, 
-      #{favorite,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{titleCategoryId,jdbcType=INTEGER}, 
-      #{putaway,jdbcType=INTEGER}, #{describes,jdbcType=VARCHAR}, #{imgs,jdbcType=VARCHAR}, 
-      #{detailBannerImgs,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{goodsType,jdbcType=INTEGER}, 
-      #{maxBuy,jdbcType=INTEGER}, #{shipAddress,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createName,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
-      #{tenantId,jdbcType=CHAR}, #{client,jdbcType=CHAR})
+    insert into william_goods (id, code, name,
+    title, sell, market_sell,
+    base_value, discount, sell_total,
+    sell_value_total, exchange_type, exchange_point,
+    give_point, user_point, total,
+    residue, month_sell, service_tags,
+    favorite, category_id, title_category_id,
+    guess_ulike, putaway, describes,
+    imgs, detail_banner_imgs, detail,
+    goods_type, max_buy, ship_address,
+    status, create_time, create_name,
+    create_id, update_time, update_name,
+    update_id, tenant_id, client
+    )
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{title,jdbcType=VARCHAR}, #{sell,jdbcType=DECIMAL}, #{marketSell,jdbcType=DECIMAL},
+    #{baseValue,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{sellTotal,jdbcType=INTEGER},
+    #{sellValueTotal,jdbcType=DECIMAL}, #{exchangeType,jdbcType=INTEGER}, #{exchangePoint,jdbcType=INTEGER},
+    #{givePoint,jdbcType=INTEGER}, #{userPoint,jdbcType=INTEGER}, #{total,jdbcType=INTEGER},
+    #{residue,jdbcType=INTEGER}, #{monthSell,jdbcType=INTEGER}, #{serviceTags,jdbcType=VARCHAR},
+    #{favorite,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{titleCategoryId,jdbcType=INTEGER},
+    #{guessUlike,jdbcType=INTEGER}, #{putaway,jdbcType=INTEGER}, #{describes,jdbcType=VARCHAR},
+    #{imgs,jdbcType=VARCHAR}, #{detailBannerImgs,jdbcType=CHAR}, #{detail,jdbcType=CHAR},
+    #{goodsType,jdbcType=INTEGER}, #{maxBuy,jdbcType=INTEGER}, #{shipAddress,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createName,jdbcType=VARCHAR},
+    #{createId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR},
+    #{updateId,jdbcType=VARCHAR}, #{tenantId,jdbcType=CHAR}, #{client,jdbcType=CHAR}
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.william.pojo.WilliamGoods" >
     insert into william_goods
@@ -237,6 +242,9 @@
       </if>
       <if test="titleCategoryId != null" >
         title_category_id,
+      </if>
+      <if test="guessUlike != null" >
+        guess_ulike,
       </if>
       <if test="putaway != null" >
         putaway,
@@ -354,6 +362,9 @@
       <if test="titleCategoryId != null" >
         #{titleCategoryId,jdbcType=INTEGER},
       </if>
+      <if test="guessUlike != null" >
+        #{guessUlike,jdbcType=INTEGER},
+      </if>
       <if test="putaway != null" >
         #{putaway,jdbcType=INTEGER},
       </if>
@@ -364,10 +375,10 @@
         #{imgs,jdbcType=VARCHAR},
       </if>
       <if test="detailBannerImgs != null" >
-        #{detailBannerImgs,jdbcType=VARCHAR},
+        #{detailBannerImgs,jdbcType=CHAR},
       </if>
       <if test="detail != null" >
-        #{detail,jdbcType=VARCHAR},
+        #{detail,jdbcType=CHAR},
       </if>
       <if test="goodsType != null" >
         #{goodsType,jdbcType=INTEGER},
@@ -479,6 +490,9 @@
       <if test="record.titleCategoryId != null" >
         title_category_id = #{record.titleCategoryId,jdbcType=INTEGER},
       </if>
+      <if test="record.guessUlike != null" >
+        guess_ulike = #{record.guessUlike,jdbcType=INTEGER},
+      </if>
       <if test="record.putaway != null" >
         putaway = #{record.putaway,jdbcType=INTEGER},
       </if>
@@ -489,10 +503,10 @@
         imgs = #{record.imgs,jdbcType=VARCHAR},
       </if>
       <if test="record.detailBannerImgs != null" >
-        detail_banner_imgs = #{record.detailBannerImgs,jdbcType=VARCHAR},
+        detail_banner_imgs = #{record.detailBannerImgs,jdbcType=CHAR},
       </if>
       <if test="record.detail != null" >
-        detail = #{record.detail,jdbcType=VARCHAR},
+        detail = #{record.detail,jdbcType=CHAR},
       </if>
       <if test="record.goodsType != null" >
         goods_type = #{record.goodsType,jdbcType=INTEGER},
@@ -538,43 +552,44 @@
   <update id="updateByExample" parameterType="map" >
     update william_goods
     set id = #{record.id,jdbcType=VARCHAR},
-      code = #{record.code,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
-      sell = #{record.sell,jdbcType=DECIMAL},
-      market_sell = #{record.marketSell,jdbcType=DECIMAL},
-      base_value = #{record.baseValue,jdbcType=DECIMAL},
-      discount = #{record.discount,jdbcType=DECIMAL},
-      sell_total = #{record.sellTotal,jdbcType=INTEGER},
-      sell_value_total = #{record.sellValueTotal,jdbcType=DECIMAL},
-      exchange_type = #{record.exchangeType,jdbcType=INTEGER},
-      exchange_point = #{record.exchangePoint,jdbcType=INTEGER},
-      give_point = #{record.givePoint,jdbcType=INTEGER},
-      user_point = #{record.userPoint,jdbcType=INTEGER},
-      total = #{record.total,jdbcType=INTEGER},
-      residue = #{record.residue,jdbcType=INTEGER},
-      month_sell = #{record.monthSell,jdbcType=INTEGER},
-      service_tags = #{record.serviceTags,jdbcType=VARCHAR},
-      favorite = #{record.favorite,jdbcType=INTEGER},
-      category_id = #{record.categoryId,jdbcType=INTEGER},
-      title_category_id = #{record.titleCategoryId,jdbcType=INTEGER},
-      putaway = #{record.putaway,jdbcType=INTEGER},
-      describes = #{record.describes,jdbcType=VARCHAR},
-      imgs = #{record.imgs,jdbcType=VARCHAR},
-      detail_banner_imgs = #{record.detailBannerImgs,jdbcType=VARCHAR},
-      detail = #{record.detail,jdbcType=VARCHAR},
-      goods_type = #{record.goodsType,jdbcType=INTEGER},
-      max_buy = #{record.maxBuy,jdbcType=INTEGER},
-      ship_address = #{record.shipAddress,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      create_name = #{record.createName,jdbcType=VARCHAR},
-      create_id = #{record.createId,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      update_name = #{record.updateName,jdbcType=VARCHAR},
-      update_id = #{record.updateId,jdbcType=VARCHAR},
-      tenant_id = #{record.tenantId,jdbcType=CHAR},
-      client = #{record.client,jdbcType=CHAR}
+    code = #{record.code,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    title = #{record.title,jdbcType=VARCHAR},
+    sell = #{record.sell,jdbcType=DECIMAL},
+    market_sell = #{record.marketSell,jdbcType=DECIMAL},
+    base_value = #{record.baseValue,jdbcType=DECIMAL},
+    discount = #{record.discount,jdbcType=DECIMAL},
+    sell_total = #{record.sellTotal,jdbcType=INTEGER},
+    sell_value_total = #{record.sellValueTotal,jdbcType=DECIMAL},
+    exchange_type = #{record.exchangeType,jdbcType=INTEGER},
+    exchange_point = #{record.exchangePoint,jdbcType=INTEGER},
+    give_point = #{record.givePoint,jdbcType=INTEGER},
+    user_point = #{record.userPoint,jdbcType=INTEGER},
+    total = #{record.total,jdbcType=INTEGER},
+    residue = #{record.residue,jdbcType=INTEGER},
+    month_sell = #{record.monthSell,jdbcType=INTEGER},
+    service_tags = #{record.serviceTags,jdbcType=VARCHAR},
+    favorite = #{record.favorite,jdbcType=INTEGER},
+    category_id = #{record.categoryId,jdbcType=INTEGER},
+    title_category_id = #{record.titleCategoryId,jdbcType=INTEGER},
+    guess_ulike = #{record.guessUlike,jdbcType=INTEGER},
+    putaway = #{record.putaway,jdbcType=INTEGER},
+    describes = #{record.describes,jdbcType=VARCHAR},
+    imgs = #{record.imgs,jdbcType=VARCHAR},
+    detail_banner_imgs = #{record.detailBannerImgs,jdbcType=CHAR},
+    detail = #{record.detail,jdbcType=CHAR},
+    goods_type = #{record.goodsType,jdbcType=INTEGER},
+    max_buy = #{record.maxBuy,jdbcType=INTEGER},
+    ship_address = #{record.shipAddress,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    create_name = #{record.createName,jdbcType=VARCHAR},
+    create_id = #{record.createId,jdbcType=VARCHAR},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    update_name = #{record.updateName,jdbcType=VARCHAR},
+    update_id = #{record.updateId,jdbcType=VARCHAR},
+    tenant_id = #{record.tenantId,jdbcType=CHAR},
+    client = #{record.client,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -642,6 +657,9 @@
       <if test="titleCategoryId != null" >
         title_category_id = #{titleCategoryId,jdbcType=INTEGER},
       </if>
+      <if test="guessUlike != null" >
+        guess_ulike = #{guessUlike,jdbcType=INTEGER},
+      </if>
       <if test="putaway != null" >
         putaway = #{putaway,jdbcType=INTEGER},
       </if>
@@ -652,10 +670,10 @@
         imgs = #{imgs,jdbcType=VARCHAR},
       </if>
       <if test="detailBannerImgs != null" >
-        detail_banner_imgs = #{detailBannerImgs,jdbcType=VARCHAR},
+        detail_banner_imgs = #{detailBannerImgs,jdbcType=CHAR},
       </if>
       <if test="detail != null" >
-        detail = #{detail,jdbcType=VARCHAR},
+        detail = #{detail,jdbcType=CHAR},
       </if>
       <if test="goodsType != null" >
         goods_type = #{goodsType,jdbcType=INTEGER},
@@ -699,58 +717,59 @@
   <update id="updateByPrimaryKey" parameterType="com.william.pojo.WilliamGoods" >
     update william_goods
     set code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      sell = #{sell,jdbcType=DECIMAL},
-      market_sell = #{marketSell,jdbcType=DECIMAL},
-      base_value = #{baseValue,jdbcType=DECIMAL},
-      discount = #{discount,jdbcType=DECIMAL},
-      sell_total = #{sellTotal,jdbcType=INTEGER},
-      sell_value_total = #{sellValueTotal,jdbcType=DECIMAL},
-      exchange_type = #{exchangeType,jdbcType=INTEGER},
-      exchange_point = #{exchangePoint,jdbcType=INTEGER},
-      give_point = #{givePoint,jdbcType=INTEGER},
-      user_point = #{userPoint,jdbcType=INTEGER},
-      total = #{total,jdbcType=INTEGER},
-      residue = #{residue,jdbcType=INTEGER},
-      month_sell = #{monthSell,jdbcType=INTEGER},
-      service_tags = #{serviceTags,jdbcType=VARCHAR},
-      favorite = #{favorite,jdbcType=INTEGER},
-      category_id = #{categoryId,jdbcType=INTEGER},
-      title_category_id = #{titleCategoryId,jdbcType=INTEGER},
-      putaway = #{putaway,jdbcType=INTEGER},
-      describes = #{describes,jdbcType=VARCHAR},
-      imgs = #{imgs,jdbcType=VARCHAR},
-      detail_banner_imgs = #{detailBannerImgs,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=VARCHAR},
-      goods_type = #{goodsType,jdbcType=INTEGER},
-      max_buy = #{maxBuy,jdbcType=INTEGER},
-      ship_address = #{shipAddress,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_name = #{createName,jdbcType=VARCHAR},
-      create_id = #{createId,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_name = #{updateName,jdbcType=VARCHAR},
-      update_id = #{updateId,jdbcType=VARCHAR},
-      tenant_id = #{tenantId,jdbcType=CHAR},
-      client = #{client,jdbcType=CHAR}
+    name = #{name,jdbcType=VARCHAR},
+    title = #{title,jdbcType=VARCHAR},
+    sell = #{sell,jdbcType=DECIMAL},
+    market_sell = #{marketSell,jdbcType=DECIMAL},
+    base_value = #{baseValue,jdbcType=DECIMAL},
+    discount = #{discount,jdbcType=DECIMAL},
+    sell_total = #{sellTotal,jdbcType=INTEGER},
+    sell_value_total = #{sellValueTotal,jdbcType=DECIMAL},
+    exchange_type = #{exchangeType,jdbcType=INTEGER},
+    exchange_point = #{exchangePoint,jdbcType=INTEGER},
+    give_point = #{givePoint,jdbcType=INTEGER},
+    user_point = #{userPoint,jdbcType=INTEGER},
+    total = #{total,jdbcType=INTEGER},
+    residue = #{residue,jdbcType=INTEGER},
+    month_sell = #{monthSell,jdbcType=INTEGER},
+    service_tags = #{serviceTags,jdbcType=VARCHAR},
+    favorite = #{favorite,jdbcType=INTEGER},
+    category_id = #{categoryId,jdbcType=INTEGER},
+    title_category_id = #{titleCategoryId,jdbcType=INTEGER},
+    guess_ulike = #{guessUlike,jdbcType=INTEGER},
+    putaway = #{putaway,jdbcType=INTEGER},
+    describes = #{describes,jdbcType=VARCHAR},
+    imgs = #{imgs,jdbcType=VARCHAR},
+    detail_banner_imgs = #{detailBannerImgs,jdbcType=CHAR},
+    detail = #{detail,jdbcType=CHAR},
+    goods_type = #{goodsType,jdbcType=INTEGER},
+    max_buy = #{maxBuy,jdbcType=INTEGER},
+    ship_address = #{shipAddress,jdbcType=VARCHAR},
+    status = #{status,jdbcType=INTEGER},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    create_name = #{createName,jdbcType=VARCHAR},
+    create_id = #{createId,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_name = #{updateName,jdbcType=VARCHAR},
+    update_id = #{updateId,jdbcType=VARCHAR},
+    tenant_id = #{tenantId,jdbcType=CHAR},
+    client = #{client,jdbcType=CHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectPage" resultMap="BaseResultMap" parameterType="com.william.pojo.WilliamGoodsExample" >
-    select 
-<if test="distinct" > 
-distinct 
-</if> 
-<include refid="Base_Column_List" /> 
-from william_goods
-<if test="_parameter != null" > 
-<include refid="Example_Where_Clause" /> 
-</if> 
-<if test="orderByClause != null" > 
-order by ${orderByClause} 
-</if> 
-limit #{pageSize} offset #{startPos} 
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from william_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit #{pageSize} offset #{startPos}
 
   </select>
 
@@ -778,6 +797,20 @@ limit #{pageSize} offset #{startPos}
     and william_goods.putaway = 1
   </select>
 
+  <!-- 猜你喜欢-->
+  <select id="selectByCategoryIdAndGuessLike" resultType="com.william.pojo.WilliamGoods">
+     SELECT
+     <include refid="Base_Column_List"/>
+     from william_goods
+     where william_goods.category_id = #{categoryId}
+     and william_goods.tenant_id = #{tenantId}
+     and william_goods.client = #{client}
+     and william_goods.residue > 0
+     and william_goods.status = 1
+     and william_goods.putaway = 1
+     order by william_goods.guess_ulike,william_goods.id desc
+  </select>
+
 
   <!-- 商品添加收藏数 -->
   <update id="addGoodsFavoriteById">
@@ -790,4 +823,12 @@ limit #{pageSize} offset #{startPos}
     update william_goods
     set favorite = favorite - 1 where id = #{value}
   </update>
+
+  <!-- 我的收藏-->
+  <select id="getMyCollect" resultType="com.william.pojo.WilliamGoods">
+     SELECT
+     <include refid="Base_Column_List"/>
+     from william_goods
+     where william_goods.id in (select collect_id from william_customer_collect where status = 1 and type =1 and cust_id = #{uid})
+  </select>
 </mapper>

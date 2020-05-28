@@ -1,4 +1,6 @@
 租户配置 william_tenant_config
+静态资源协议等 william_sys_static
+
 
 图片分类  william_picture_category
 图片   william_picture

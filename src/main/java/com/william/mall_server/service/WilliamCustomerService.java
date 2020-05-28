@@ -3,7 +3,8 @@ package com.william.mall_server.service;
 import com.william.pojo.Result;
 import com.william.pojo.WilliamCustomer;
 import com.william.pojo.req.BaseRequest;
-import com.william.pojo.req.UpdateCustomerReq; /**
+import com.william.pojo.req.UpdateCustomerReq;
+import com.william.pojo.req.UpdatePassword; /**
  * @author xinchuang
  * @version v1.0
  * @date 2020/5/18 17:21
@@ -15,4 +16,5 @@ public interface WilliamCustomerService {
 
     Result updateCustomerInfo(UpdateCustomerReq updateCustomerReq, String uid);
 
+    void updatePassword(UpdatePassword updatePassword, String uid);
 }

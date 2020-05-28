@@ -1,5 +1,6 @@
 package com.william.mall_server.service;
 
+import com.william.pojo.req.BaseRequest;
 import com.william.pojo.req.LoginByCaptchaOrPassword;
 import com.william.pojo.resp.LoginResp;
 
@@ -14,4 +15,6 @@ public interface WilliamLoginService {
     LoginResp getLoginByPhoneAndCaptch(LoginByCaptchaOrPassword loginByCaptchaOrPassword);
 
     LoginResp getLoginByPhoneAndPassword(LoginByCaptchaOrPassword loginByCaptchaOrPassword);
+
+    LoginResp loginByToken(BaseRequest baseRequest,String token,String uid);
 }

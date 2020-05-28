@@ -34,4 +34,5 @@ public interface WilliamCustomerMapper {
     WilliamCustomer getLoginByPhoneAndPassword(@Param("phone") String phone,@Param("password") String password);
 
     WilliamCustomer selectByPhone(String customerPhone);
+
 }

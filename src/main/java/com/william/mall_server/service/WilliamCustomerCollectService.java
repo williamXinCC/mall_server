@@ -1,6 +1,11 @@
 package com.william.mall_server.service;
 
+import com.william.pojo.WilliamGoods;
 import com.william.pojo.req.CollectReq;
+import com.william.pojo.req.PageConditionReq;
+
+import java.util.List;
+
 /**
  * @author xinchuang
  * @version v1.0
@@ -14,4 +19,6 @@ public interface WilliamCustomerCollectService {
     void deleteCollect(CollectReq collectReq, String uid);
 
     Integer getAlreadyCollect(CollectReq collectReq, String uid);
+
+    List<WilliamGoods> getMyCollect(PageConditionReq pageConditionReq, String uid);
 }
